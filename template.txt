@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta name="keywords" content="Programming, C++, C, Blog">
+<meta name="description" content="Personal blog/portfolio/site for Daniel Jones">
+<meta name="author" content="Daniel Jones">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-control" content="public">
+<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+<!--<link rel="icon" type="image/png" href="https://danieljon.es/favicon.png">-->
+<title>{TITLE}</title>
+<style>
+body{font-family: "Misc Fixed"; font-weight: bold; /*background: #aaaaaa;*/}
+img{max-width: 100%; max-height: 100%; overflow: hidden;}
+pre{overflow: auto; border-width: 1px; border-style: solid; border-color: black}
+.middle{text-align: center;}
+.middiv{margin: auto; width: 80%;}
+#gentag{text-align: center; font-size: 75%;}
+h1,h2,h3,h4{font-family: "Misc Fixed"; padding-left: 5px;}
+hr{border-color: black;}
+div.viewing{max-width: 70%; width: 100%; display: inline-block; margin: 10px;}
+div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-left: 15px; padding-bottom: 20px;}
+.content{}
+</style>
+</head>
+<body> 
+<div class="middle">
+<h1>danieljon.es</h1>
+<a href="/">index</a> <a href="/posts">posts</a> <a href="/opinions">opinions</a> <a href="/like.html">likes</a> <a href="/dislike.html">dislikes</a> <a href="/interesting.html">interesting</a> <a href="https://git.danieljon.es">cgit</a> <a href="https://github.com/daniel-Jones/">github</a> <br>
+
+{INFO}
+</div>
+<div class="content">
+{CONTENT}
+</div>
+<!-- <br><br> <div class="middle"> <img src="https://danieljon.es/linuxfreak.png"> <br> <a id="gentag" href="https://gitlab.com/ubunchu-translators/ubunchu">source</a> </div> -->
+<br><br> <div class="middle"> <a href="https://www.fsf.org/"><img src="https://danieljon.es/media/fsf_member.png" alt="FSF member"></a></div>
+<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/website/">sitegenerator</a></div>
+<a href="https://danieljon.es/cirno"><img src="https://danieljon.es/media/do_you_want_to_talk.png" style="position: fixed; right: 0%; bottom: -0px; width: 10%; height: auto;"></a>
+</body>
+</html>
