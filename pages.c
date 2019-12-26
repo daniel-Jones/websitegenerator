@@ -46,7 +46,6 @@ createfile(const char *file)
 	FILE *out = fopen(filename, "w");
 	if (!out)
 	{
-
 		fprintf(stderr, "unable to open file '%s', unrecoverable failure\n", filename);
 		return 0;
 	}
@@ -190,7 +189,6 @@ deletebytes(const char *file, long offset, size_t bytes)
 
 	if (rename("tmp.tmp", filename) == -1)
 	{
-
 		fprintf(stderr, "unable to rename tmp file to '%s', unrecoverable failure\n", filename);
 		fclose(out);
 		return 0;
@@ -278,11 +276,58 @@ writefileatbyte(const char *dest, const char *source, long offset)
 
 	if (rename("tmp.tmp", filename) == -1)
 	{
-
 		fprintf(stderr, "unable to rename tmp file to '%s', unrecoverable failure\n", filename);
 		return 0;
 	}
 
+	return 1;
+}
+
+int
+replaceinpage(const char *outfile, const char *toreplace, const char *infile)
+{
+	/*
+	 * replace 'toreplace' in file 'outfile' taking 'infile' as input
+	 * return 1 on success, 0 on failure
+	 */
+	long substrpos = -1;
+
+	substrpos = findstring(frontpage_index_output, toreplace);
+
+	if (substrpos < 0)
+	{
+		return 0;
+	}
+
+	if (!deletebytes(frontpage_index_output, substrpos, strlen(toreplace)))
+	{
+		return 0;
+	}
+
+	if (!writefileatbyte(outfile, infile, substrpos))
+	{
+		return 0;
+	}
+	return 1;
+}
+
+char
+*gettime()
+{
+	return "10/10/2019";
+}
+
+int
+createtmpfile(const char *name, const char *content, size_t size)
+{
+	FILE *tmp = fopen(name, "w");
+	if (!tmp)
+	{
+		fprintf(stderr, "unable to create temp file '%s', unrecoverable failure\n", name);
+		return 0;
+	}
+	fwrite(content, 1, size, tmp);
+	fclose(tmp);
 	return 1;
 }
 
@@ -295,24 +340,20 @@ frontpage(int flags)
 		return 0;
 	}
 
-	long substrpos = -1;
-
-	substrpos = findstring(frontpage_index_output, "cirno");
-
-	if (substrpos < 0)
+	createtmpfile("title.tmp", frontpage_title, strlen(frontpage_title));
+	createtmpfile("info.tmp", frontpage_info, strlen(frontpage_info));
+	createtmpfile("date.tmp", gettime(), strlen(gettime()));
+	if (!replaceinpage(frontpage_index_output, content_string, frontpage_index) || 
+	    !replaceinpage(frontpage_index_output, title_string, "title.tmp") ||
+	    !replaceinpage(frontpage_index_output, info_string, "info.tmp") ||
+	    !replaceinpage(frontpage_index_output, time_string, "date.tmp"))
 	{
 		fprintf(stderr, "unable to generate frontpage\n");
 		return 0;
 	}
+	remove("title.tmp");
+	remove("date.tmp");
+	remove("info.tmp");
 
-	printf("first occurance of '%s' is at byte %ld\n", "cirno", substrpos);
-
-	
-	if (!deletebytes(frontpage_index_output, substrpos, strlen("cirno")))
-	{
-		fprintf(stderr, "unable to generate frontpage\n");
-		return 0;
-	}
-	writefileatbyte(frontpage_index_output, "source.txt", substrpos);
 	return 1;
 }

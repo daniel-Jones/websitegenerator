@@ -37,6 +37,7 @@ static const char 	*info_string = "{INFO}";
 static const char 	*time_string = "{TIME}";
 static const char 	*template_file = "template.txt";
 static const char 	*frontpage_title = "Index";
+static const char 	*frontpage_info = "<h1>Index</h1>";
 static const char 	*frontpage_index = "content/index.txt";
 static const char 	*frontpage_index_output = "index.html";
 
