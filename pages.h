@@ -25,6 +25,7 @@
 int createfile(const char *file);
 long findstring(const char *file, const char *str);
 int deletebytes(const char *file, long offset, size_t bytes);
+int writefileatbyte(const char *dest, const char *source, long offset);
 
 /* generators (to be put into the pages array) */
 int frontpage(int flags);

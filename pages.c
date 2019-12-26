@@ -201,6 +201,92 @@ deletebytes(const char *file, long offset, size_t bytes)
 }
 
 int
+writefileatbyte(const char *dest, const char *source, long offset)
+{
+	/*
+	 * write  file 'source' into 'output_dir'/'file' starting at offset 'offset'
+	 * return 1 on success. 0 on failure
+	 */
+
+	char filename[512] = {0};
+	size_t length = 512;
+	strncat(filename, output_dir, length-1);
+	length = length - strlen(output_dir);
+	strncat(filename, dest, length-1);
+
+	FILE *in = fopen(filename, "r");
+	if (!in)
+	{
+		fprintf(stderr, "unable to open file '%s', unrecoverable failure\n", filename);
+		return 0;
+	}
+
+	FILE *tmp = fopen("tmp.tmp", "w");
+	if (!tmp)
+	{
+		fprintf(stderr, "unable to open temp file, unrecoverable failure\n");
+		fclose(in);
+		return 0;
+	}
+
+	FILE *src = fopen(source, "r");
+	if (!src)
+	{
+		fprintf(stderr, "unable to open file '%s', unrecoverable failure\n", source);
+		fclose(in);
+		fclose(tmp);
+		return 0;
+	}
+
+	/*
+	 * read file 'in' until byte 'offset', writing into file 'tmp'
+	 * write file 'src' into 'tmp'
+	 * finish writing file 'in' into 'tmp'
+	 * delete file 'filename'
+	 * rename file 'tmp' 'filename'
+	 */
+
+	char c, t, a;
+	long curpos = 1;
+	while ((c = fgetc(in)) != EOF)
+	{
+		if (curpos == offset)
+		{
+			while ((t = fgetc(src)) != EOF)
+			{
+				/* prevent writing end of line '\n' if the next char is EOF */
+				a = fgetc(src);
+				ungetc(a, src);
+				if (a == EOF && t == '\n')
+					continue;
+				fputc(t, tmp);
+			}
+		}
+		fputc(c, tmp);
+		curpos++;
+	}
+
+	fclose(tmp);
+	fclose(in);
+	fclose(src);
+
+	if (remove(filename) == -1)
+	{
+		fprintf(stderr, "unable to delete file '%s', unrecoverable failure\n", filename);
+		return 0;
+	}
+
+	if (rename("tmp.tmp", filename) == -1)
+	{
+
+		fprintf(stderr, "unable to rename tmp file to '%s', unrecoverable failure\n", filename);
+		return 0;
+	}
+
+	return 1;
+}
+
+int
 frontpage(int flags)
 {
 	if (!createfile(frontpage_index_output))
@@ -227,5 +313,6 @@ frontpage(int flags)
 		fprintf(stderr, "unable to generate frontpage\n");
 		return 0;
 	}
+	writefileatbyte(frontpage_index_output, "source.txt", substrpos);
 	return 1;
 }
