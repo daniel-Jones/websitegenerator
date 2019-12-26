@@ -155,7 +155,7 @@ deletebytes(const char *file, long offset, size_t bytes)
 		return 0;
 	}
 
-	FILE *out = tmpfile();
+	FILE *out = fopen("tmp.tmp", "w");
 	if (!out)
 	{
 		fprintf(stderr, "unable to open temporary file, unrecoverable failure\n");
@@ -178,7 +178,7 @@ deletebytes(const char *file, long offset, size_t bytes)
 		curpos++;
 	}
 
-	/* delete 'filename' and move our temp file 'out' to take its place (by naively rewriting the file..) */
+	/* delete 'filename' and move our temp file 'out' to take its place */
 	fclose(in);
 	if (remove(filename) == -1) 
 	{
@@ -188,22 +188,15 @@ deletebytes(const char *file, long offset, size_t bytes)
 		return 0;
 	}
 
-	/* FIXME: do something better than rewriting the file, move it somehow */
-	FILE *new = fopen(filename, "w");
-	if (!new)
+	if (rename("tmp.tmp", filename) == -1)
 	{
-		fprintf(stderr, "unable to open file '%s' for writing new data, unrecoverable failure\n", filename);
+
+		fprintf(stderr, "unable to rename tmp file to '%s', unrecoverable failure\n", filename);
 		fclose(out);
 		return 0;
 	}
-	fseek(out, 0, SEEK_SET);
-	while ((c = fgetc(out)) != EOF)
-	{
-		fputc(c, new);
-	}
 
 	fclose(out);
-	fclose(new);
 	return 1;
 }
 
