@@ -20,6 +20,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <time.h>
 
 struct fileorstring
 {
@@ -33,7 +34,7 @@ long findstring(const char *file, const char *str);
 int deletebytes(const char *file, long offset, size_t bytes);
 int writeatbyte(const char *dest, struct fileorstring *source, long offset);
 int replaceinpage(const char *outfile, const char *toreplace, struct fileorstring *source);
-char *gettime();
+char *gettime(char *buffer, size_t size);
 int createtmpfile(const char *name, const char *content, size_t size);
 
 /* generators (to be put into the pages array) */

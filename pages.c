@@ -307,6 +307,7 @@ replaceinpage(const char *outfile, const char *toreplace, struct fileorstring *s
 	 * replace 'toreplace' in file 'outfile' taking 'infile' as input
 	 * return 1 on success, 0 on failure
 	 */
+
 	long substrpos = -1;
 
 	substrpos = findstring(frontpage_index_output, toreplace);
@@ -329,9 +330,16 @@ replaceinpage(const char *outfile, const char *toreplace, struct fileorstring *s
 }
 
 char
-*gettime()
+*gettime(char *buffer, size_t size)
 {
-	return "10/10/2019";
+	/*
+	 * put the current date into a buffer and return it
+	 */
+	
+	time_t t = time(NULL);
+	struct tm tm = *localtime(&t);
+	snprintf(buffer, size, "%d/%d/%d",  tm.tm_mday, tm.tm_mon+1, tm.tm_year + 1900);
+	return buffer;
 }
 
 int
@@ -357,10 +365,11 @@ frontpage(int flags)
 		return 0;
 	}
 
+	char date[255];
 	struct fileorstring index = {frontpage_index, NULL};
 	struct fileorstring title = {NULL, frontpage_title};
 	struct fileorstring info = {NULL, frontpage_info};
-	struct fileorstring time = {NULL, gettime()};
+	struct fileorstring time = {NULL, gettime(date, 255)};
 	if (!replaceinpage(frontpage_index_output, content_string, &index) ||
 	    !replaceinpage(frontpage_index_output, title_string, &title) ||
 	    !replaceinpage(frontpage_index_output, info_string, &info) ||
@@ -369,9 +378,6 @@ frontpage(int flags)
 		fprintf(stderr, "unable to generate frontpage\n");
 		return 0;
 	}
-	//remove("title.tmp");
-	//remove("date.tmp");
-	//remove("info.tmp");
 
 	return 1;
 }
