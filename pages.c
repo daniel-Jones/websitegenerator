@@ -199,13 +199,12 @@ deletebytes(const char *file, long offset, size_t bytes)
 }
 
 int
-writefileatbyte(const char *dest, const char *source, long offset)
+writeatbyte(const char *dest, struct fileorstring *source, long offset)
 {
 	/*
 	 * write  file 'source' into 'output_dir'/'file' starting at offset 'offset'
 	 * return 1 on success. 0 on failure
 	 */
-
 	char filename[512] = {0};
 	size_t length = 512;
 	strncat(filename, output_dir, length-1);
@@ -227,18 +226,23 @@ writefileatbyte(const char *dest, const char *source, long offset)
 		return 0;
 	}
 
-	FILE *src = fopen(source, "r");
-	if (!src)
+	FILE *src = NULL;
+	if (source->file != NULL)
 	{
-		fprintf(stderr, "unable to open file '%s', unrecoverable failure\n", source);
-		fclose(in);
-		fclose(tmp);
-		return 0;
+		src = fopen(source->file, "r");
+		if (!src)
+		{
+			fprintf(stderr, "unable to open file '%s', unrecoverable failure\n", source->file);
+			fclose(in);
+			fclose(tmp);
+			return 0;
+		}
 	}
 
 	/*
 	 * read file 'in' until byte 'offset', writing into file 'tmp'
-	 * write file 'src' into 'tmp'
+	 * if source->file isn't NULL, write file 'src' into 'tmp'
+	 * otherwise write 'source->str' into file 'tmp'
 	 * finish writing file 'in' into 'tmp'
 	 * delete file 'filename'
 	 * rename file 'tmp' 'filename'
@@ -246,18 +250,30 @@ writefileatbyte(const char *dest, const char *source, long offset)
 
 	char c, t, a;
 	long curpos = 1;
+	int i = 0;
 	while ((c = fgetc(in)) != EOF)
 	{
 		if (curpos == offset)
 		{
-			while ((t = fgetc(src)) != EOF)
+			if (src != NULL)
 			{
-				/* prevent writing end of line '\n' if the next char is EOF */
-				a = fgetc(src);
-				ungetc(a, src);
-				if (a == EOF && t == '\n')
-					continue;
-				fputc(t, tmp);
+				while ((t = fgetc(src)) != EOF)
+				{
+					/* prevent writing end of line '\n' if the next char is EOF */
+					a = fgetc(src);
+					ungetc(a, src);
+					if (a == EOF && t == '\n')
+						continue;
+					fputc(t, tmp);
+				}
+			}
+			else
+			{
+				while ((t = source->str[i]) != '\0')
+				{
+					fputc(source->str[i], tmp);
+					i++;
+				}
 			}
 		}
 		fputc(c, tmp);
@@ -266,7 +282,8 @@ writefileatbyte(const char *dest, const char *source, long offset)
 
 	fclose(tmp);
 	fclose(in);
-	fclose(src);
+	if (src)
+		fclose(src);
 
 	if (remove(filename) == -1)
 	{
@@ -284,7 +301,7 @@ writefileatbyte(const char *dest, const char *source, long offset)
 }
 
 int
-replaceinpage(const char *outfile, const char *toreplace, const char *infile)
+replaceinpage(const char *outfile, const char *toreplace, struct fileorstring *source)
 {
 	/*
 	 * replace 'toreplace' in file 'outfile' taking 'infile' as input
@@ -304,7 +321,7 @@ replaceinpage(const char *outfile, const char *toreplace, const char *infile)
 		return 0;
 	}
 
-	if (!writefileatbyte(outfile, infile, substrpos))
+	if (!writeatbyte(outfile, source, substrpos))
 	{
 		return 0;
 	}
@@ -340,20 +357,21 @@ frontpage(int flags)
 		return 0;
 	}
 
-	createtmpfile("title.tmp", frontpage_title, strlen(frontpage_title));
-	createtmpfile("info.tmp", frontpage_info, strlen(frontpage_info));
-	createtmpfile("date.tmp", gettime(), strlen(gettime()));
-	if (!replaceinpage(frontpage_index_output, content_string, frontpage_index) || 
-	    !replaceinpage(frontpage_index_output, title_string, "title.tmp") ||
-	    !replaceinpage(frontpage_index_output, info_string, "info.tmp") ||
-	    !replaceinpage(frontpage_index_output, time_string, "date.tmp"))
+	struct fileorstring index = {frontpage_index, NULL};
+	struct fileorstring title = {NULL, frontpage_title};
+	struct fileorstring info = {NULL, frontpage_info};
+	struct fileorstring time = {NULL, gettime()};
+	if (!replaceinpage(frontpage_index_output, content_string, &index) ||
+	    !replaceinpage(frontpage_index_output, title_string, &title) ||
+	    !replaceinpage(frontpage_index_output, info_string, &info) ||
+	    !replaceinpage(frontpage_index_output, time_string, &time))
 	{
 		fprintf(stderr, "unable to generate frontpage\n");
 		return 0;
 	}
-	remove("title.tmp");
-	remove("date.tmp");
-	remove("info.tmp");
+	//remove("title.tmp");
+	//remove("date.tmp");
+	//remove("info.tmp");
 
 	return 1;
 }
