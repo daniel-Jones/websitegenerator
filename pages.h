@@ -21,6 +21,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <errno.h>
 
 struct fileorstring
 {
@@ -39,5 +40,12 @@ int createtmpfile(const char *name, const char *content, size_t size);
 
 /* generators (to be put into the pages array) */
 int frontpage(int flags);
+int likespage(int flags);
+int dislikespage(int flags);
+int interestingpage(int flags);
+int opinionspage(int flags);
+int opinions_animepage(int flags);
+int opinions_everythingpage(int flags);
+int portfoliopage(int flags);
 
 #endif

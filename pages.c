@@ -20,9 +20,14 @@ int
 createfile(const char *file)
 {
 	/*
-	 * create file at location 'file' using the template
+	 * create file at location 'output_dir'/file' using the template
 	 * overwrite if it exists
 	 * assume the caller has put us in the base directory already
+	 */
+
+	/*
+	 * FIXME: if trying to create a file with subdirectories it will not work
+	 * one day tokenise the file path and make them
 	 */
 	
 	struct stat sb = {0};
@@ -46,6 +51,7 @@ createfile(const char *file)
 	FILE *out = fopen(filename, "w");
 	if (!out)
 	{
+		fprintf(stderr, "Error opening file: %s\n", strerror(errno));
 		fprintf(stderr, "unable to open file '%s', unrecoverable failure\n", filename);
 		return 0;
 	}
@@ -53,6 +59,7 @@ createfile(const char *file)
 	FILE *in = fopen(template_file, "r");
 	if (!in)
 	{
+		fprintf(stderr, "Error opening file: %s\n", strerror(errno));
 		fprintf(stderr, "unable to open file '%s', unrecoverable failure\n", filename);
 		fclose(out);
 		return 0;
@@ -93,6 +100,7 @@ findstring(const char *file, const char *str)
 	FILE *in = fopen(filename, "r");
 	if (!in)
 	{
+		fprintf(stderr, "Error opening file: %s\n", strerror(errno));
 		fprintf(stderr, "unable to open file '%s', unrecoverable failure\n", filename);
 		return -1;
 	}
@@ -150,6 +158,7 @@ deletebytes(const char *file, long offset, size_t bytes)
 	FILE *in = fopen(filename, "r");
 	if (!in)
 	{
+		fprintf(stderr, "Error opening file: %s\n", strerror(errno));
 		fprintf(stderr, "unable to open file '%s', unrecoverable failure\n", filename);
 		return 0;
 	}
@@ -157,6 +166,7 @@ deletebytes(const char *file, long offset, size_t bytes)
 	FILE *out = fopen("tmp.tmp", "w");
 	if (!out)
 	{
+		fprintf(stderr, "Error opening file: %s\n", strerror(errno));
 		fprintf(stderr, "unable to open temporary file, unrecoverable failure\n");
 		fclose(in);
 		return 0;
@@ -221,6 +231,7 @@ writeatbyte(const char *dest, struct fileorstring *source, long offset)
 	FILE *tmp = fopen("tmp.tmp", "w");
 	if (!tmp)
 	{
+		fprintf(stderr, "Error opening file: %s\n", strerror(errno));
 		fprintf(stderr, "unable to open temp file, unrecoverable failure\n");
 		fclose(in);
 		return 0;
@@ -232,6 +243,7 @@ writeatbyte(const char *dest, struct fileorstring *source, long offset)
 		src = fopen(source->file, "r");
 		if (!src)
 		{
+			fprintf(stderr, "Error opening file: %s\n", strerror(errno));
 			fprintf(stderr, "unable to open file '%s', unrecoverable failure\n", source->file);
 			fclose(in);
 			fclose(tmp);
@@ -255,6 +267,7 @@ writeatbyte(const char *dest, struct fileorstring *source, long offset)
 	{
 		if (curpos == offset)
 		{
+			/* if we have a file open to get bytes to write from */
 			if (src != NULL)
 			{
 				while ((t = fgetc(src)) != EOF)
@@ -267,6 +280,7 @@ writeatbyte(const char *dest, struct fileorstring *source, long offset)
 					fputc(t, tmp);
 				}
 			}
+			/* otherwise we read from source->str */
 			else
 			{
 				while ((t = source->str[i]) != '\0')
@@ -310,14 +324,14 @@ replaceinpage(const char *outfile, const char *toreplace, struct fileorstring *s
 
 	long substrpos = -1;
 
-	substrpos = findstring(frontpage_index_output, toreplace);
+	substrpos = findstring(outfile, toreplace);
 
 	if (substrpos < 0)
 	{
 		return 0;
 	}
 
-	if (!deletebytes(frontpage_index_output, substrpos, strlen(toreplace)))
+	if (!deletebytes(outfile, substrpos, strlen(toreplace)))
 	{
 		return 0;
 	}
@@ -369,7 +383,7 @@ frontpage(int flags)
 	struct fileorstring index = {frontpage_index, NULL};
 	struct fileorstring title = {NULL, frontpage_title};
 	struct fileorstring info = {NULL, frontpage_info};
-	struct fileorstring time = {NULL, gettime(date, 255)};
+	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
 	if (!replaceinpage(frontpage_index_output, content_string, &index) ||
 	    !replaceinpage(frontpage_index_output, title_string, &title) ||
 	    !replaceinpage(frontpage_index_output, info_string, &info) ||
@@ -381,3 +395,186 @@ frontpage(int flags)
 
 	return 1;
 }
+
+int
+likespage(int flags)
+{
+	if (!createfile(likes_content_output))
+	{
+		fprintf(stderr, "unable to generate likespage\n");
+		return 0;
+	}
+
+	char date[255];
+	struct fileorstring index = {likes_content, NULL};
+	struct fileorstring title = {NULL, likes_title};
+	struct fileorstring info = {NULL, likes_info};
+	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
+	if (!replaceinpage(likes_content_output, content_string, &index) ||
+	    !replaceinpage(likes_content_output, title_string, &title) ||
+	    !replaceinpage(likes_content_output, info_string, &info) ||
+	    !replaceinpage(likes_content_output, time_string, &time))
+	{
+		fprintf(stderr, "unable to generate likespage\n");
+		return 0;
+	}
+
+	return 1;
+}
+
+int
+dislikespage(int flags)
+{
+	if (!createfile(dislikes_content_output))
+	{
+		fprintf(stderr, "unable to generate dislikespage\n");
+		return 0;
+	}
+
+	char date[255];
+	struct fileorstring index = {dislikes_content, NULL};
+	struct fileorstring title = {NULL, dislikes_title};
+	struct fileorstring info = {NULL, dislikes_info};
+	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
+	if (!replaceinpage(dislikes_content_output, content_string, &index) ||
+	    !replaceinpage(dislikes_content_output, title_string, &title) ||
+	    !replaceinpage(dislikes_content_output, info_string, &info) ||
+	    !replaceinpage(dislikes_content_output, time_string, &time))
+	{
+		fprintf(stderr, "unable to generate dislikespage\n");
+		return 0;
+	}
+
+	return 1;
+}
+
+int
+interestingpage(int flags)
+{
+	if (!createfile(interesting_content_output))
+	{
+		fprintf(stderr, "unable to generate interestingspage\n");
+		return 0;
+	}
+
+	char date[255];
+	struct fileorstring index = {interesting_content, NULL};
+	struct fileorstring title = {NULL, interesting_title};
+	struct fileorstring info = {NULL, interesting_info};
+	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
+	if (!replaceinpage(interesting_content_output, content_string, &index) ||
+	    !replaceinpage(interesting_content_output, title_string, &title) ||
+	    !replaceinpage(interesting_content_output, info_string, &info) ||
+	    !replaceinpage(interesting_content_output, time_string, &time))
+	{
+		fprintf(stderr, "unable to generate interestingpage\n");
+		return 0;
+	}
+
+	return 1;
+}
+
+int
+opinionspage(int flags)
+{
+	if (!createfile(opinions_content_output))
+	{
+		fprintf(stderr, "unable to generate opinionspage\n");
+		return 0;
+	}
+
+	char date[255];
+	struct fileorstring index = {opinions_content, NULL};
+	struct fileorstring title = {NULL, opinions_title};
+	struct fileorstring info = {NULL, opinions_info};
+	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
+	if (!replaceinpage(opinions_content_output, content_string, &index) ||
+	    !replaceinpage(opinions_content_output, title_string, &title) ||
+	    !replaceinpage(opinions_content_output, info_string, &info) ||
+	    !replaceinpage(opinions_content_output, time_string, &time))
+	{
+		fprintf(stderr, "unable to generate opinionspage\n");
+		return 0;
+	}
+
+	return 1;
+}
+
+int
+opinions_animepage(int flags)
+{
+	if (!createfile(opinions_anime_content_output))
+	{
+		fprintf(stderr, "unable to generate opinions_animepage\n");
+		return 0;
+	}
+
+	char date[255];
+	struct fileorstring index = {opinions_anime_content, NULL};
+	struct fileorstring title = {NULL, opinions_anime_title};
+	struct fileorstring info = {NULL, opinions_anime_info};
+	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
+	if (!replaceinpage(opinions_anime_content_output, content_string, &index) ||
+	    !replaceinpage(opinions_anime_content_output, title_string, &title) ||
+	    !replaceinpage(opinions_anime_content_output, info_string, &info) ||
+	    !replaceinpage(opinions_anime_content_output, time_string, &time))
+	{
+		fprintf(stderr, "unable to generate opinions_animepage\n");
+		return 0;
+	}
+
+	return 1;
+}
+
+int
+opinions_everythingpage(int flags)
+{
+	if (!createfile(opinions_everything_content_output))
+	{
+		fprintf(stderr, "unable to generate opinions_everythingpage\n");
+		return 0;
+	}
+
+	char date[255];
+	struct fileorstring index = {opinions_everything_content, NULL};
+	struct fileorstring title = {NULL, opinions_everything_title};
+	struct fileorstring info = {NULL, opinions_everything_info};
+	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
+	if (!replaceinpage(opinions_everything_content_output, content_string, &index) ||
+	    !replaceinpage(opinions_everything_content_output, title_string, &title) ||
+	    !replaceinpage(opinions_everything_content_output, info_string, &info) ||
+	    !replaceinpage(opinions_everything_content_output, time_string, &time))
+	{
+		fprintf(stderr, "unable to generate opinions_everythingpage\n");
+		return 0;
+	}
+
+	return 1;
+}
+
+int
+portfoliopage(int flags)
+{
+	if (!createfile(portfolio_content_output))
+	{
+		fprintf(stderr, "unable to generate portfoliopage\n");
+		return 0;
+	}
+
+	char date[255];
+	struct fileorstring index = {portfolio_content, NULL};
+	struct fileorstring title = {NULL, portfolio_title};
+	struct fileorstring info = {NULL, portfolio_info};
+	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
+	if (!replaceinpage(portfolio_content_output, content_string, &index) ||
+	    !replaceinpage(portfolio_content_output, title_string, &title) ||
+	    !replaceinpage(portfolio_content_output, info_string, &info) ||
+	    !replaceinpage(portfolio_content_output, time_string, &time))
+	{
+		fprintf(stderr, "unable to generate portfoliopage\n");
+		return 0;
+	}
+
+	return 1;
+}
+
