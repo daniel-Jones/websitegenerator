@@ -11,13 +11,24 @@
 <!--<link rel="icon" type="image/png" href="https://danieljon.es/favicon.png">-->
 <title>{TITLE}</title>
 <style>
-body{font-family: "Misc Fixed"; font-weight: bold; /*background: #aaaaaa;*/}
+@font-face
+{
+	font-family: 'Agave-Regular';
+	src: url(/media/fonts/Agave-Regular.eot);
+	src: url(/media/fonts/Agave-Regular.eot?#iefix) format('embedded-opentype'),
+	url(/media/fonts/Agave-Regular.woff2) format('woff2'),
+	url(/media/fonts/Agave-Regular.woff) format('woff'),
+	url(/media/fonts/Agave-Regular.ttf) format('truetype'),
+	url(/media/fontsassets/Agave-Regular.svg#Agave-Regular) format('svg');
+}
+
+body{font-family: "Agave-Regular"; background: #d2d2d2;}
 img{max-width: 100%; max-height: 100%; overflow: hidden;}
 pre{overflow: auto; border-width: 1px; border-style: solid; border-color: black}
 .middle{text-align: center;}
 .middiv{margin: auto; width: 80%;}
 #gentag{text-align: center; font-size: 75%;}
-h1,h2,h3,h4{font-family: "Misc Fixed"; padding-left: 5px;}
+h1,h2,h3,h4{font-family: "Agave-Regular"; padding-left: 5px;}
 hr{border-color: black;}
 div.viewing{max-width: 70%; width: 100%; display: inline-block; margin: 10px;}
 div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-left: 15px; padding-bottom: 20px;}

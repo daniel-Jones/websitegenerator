@@ -22,6 +22,8 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <errno.h>
+#include <dirent.h>
+#include <stdlib.h>
 
 struct fileorstring
 {
@@ -37,6 +39,8 @@ int writeatbyte(const char *dest, struct fileorstring *source, long offset);
 int replaceinpage(const char *outfile, const char *toreplace, struct fileorstring *source);
 char *gettime(char *buffer, size_t size);
 int createtmpfile(const char *name, const char *content, size_t size);
+int makedirectories(const char *basedir, const char *file);
+int postscompare(const void *a, const void *b);
 
 /* generators (to be put into the pages array) */
 int frontpage(int flags);
@@ -47,5 +51,6 @@ int opinionspage(int flags);
 int opinions_animepage(int flags);
 int opinions_everythingpage(int flags);
 int portfoliopage(int flags);
+int postspage(int flags);
 
 #endif

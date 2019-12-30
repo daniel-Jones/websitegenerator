@@ -85,6 +85,13 @@ static const char 	*portfolio_info = "<h1>Projects</h1> Detailing a number of my
 static const char 	*portfolio_content = "content/portfolio.txt";
 static const char 	*portfolio_content_output = "portfolio.html";
 
+/* posts */
+static const char 	*posts_title = "Daniel's posts";
+static const char 	*posts_info = "<h1>Posts</h1>My posts about programming and things.<br>Date format is day/month/year because I'm sane.<br><br>";
+static const char 	*posts_content = "content/blog/";
+static const char 	*posts_output_dir = "posts/";
+static const int 	posts_per_page = 10;
+
 /* each page to be generated go into this array */
 static const struct page pages[] = {
 /*	function	flags 	*/
@@ -96,6 +103,7 @@ static const struct page pages[] = {
 	{opinions_animepage,		NONE},
 	{opinions_everythingpage,	NONE},
 	{portfoliopage,			NONE},
+	{postspage,			NONE},
 };
 
 #endif
