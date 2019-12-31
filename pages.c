@@ -484,6 +484,18 @@ postspage(int flags)
 		{
 			if (strstr(ent->d_name, ".txt") != NULL)
 			{
+				int ign = 0;
+				/* check if post should be ignored */
+				for (int i = 0; i < sizeof(ignore)/sizeof(ignore[0]); i++)
+				{
+					if (atoi(ent->d_name) == ignore[i])
+					{
+						printf("ignoring post %d\n", atoi(ent->d_name));
+						ign = 1;
+					}
+				}
+				if (ign)
+					continue;
 				posts[totalposts] = atoi(ent->d_name); // gross
 				totalposts++;
 			}
