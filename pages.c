@@ -384,214 +384,89 @@ createtmpfile(const char *name, const char *content, size_t size)
 }
 
 int
-frontpage(int flags)
+genericpage(int flags, const char *output, const char *ind, const char *tit, const char *inf)
 {
-	if (!createfile(frontpage_index_output))
+	if (!createfile(output))
 	{
 		fprintf(stderr, "unable to generate frontpage\n");
 		return 0;
 	}
 
 	char date[255];
-	struct fileorstring index = {frontpage_index, NULL};
-	struct fileorstring title = {NULL, frontpage_title};
-	struct fileorstring info = {NULL, frontpage_info};
+	struct fileorstring index = {ind, NULL};
+	struct fileorstring title = {NULL, tit};
+	struct fileorstring info = {NULL, inf};
 	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
-	if (!replaceinpage(frontpage_index_output, content_string, &index) ||
-			!replaceinpage(frontpage_index_output, title_string, &title) ||
-			!replaceinpage(frontpage_index_output, info_string, &info) ||
-			!replaceinpage(frontpage_index_output, time_string, &time))
+	if (!replaceinpage(output, content_string, &index) ||
+			!replaceinpage(output, title_string, &title) ||
+			!replaceinpage(output, info_string, &info) ||
+			!replaceinpage(output, time_string, &time))
 	{
-		fprintf(stderr, "unable to generate frontpage\n");
+		fprintf(stderr, "unable to generate output\n");
 		return 0;
 	}
 
 	return 1;
+
+}
+
+int
+frontpage(int flags)
+{
+	int ret = genericpage(flags, frontpage_index_output, frontpage_index, frontpage_title, frontpage_info);
+	return ret;
 }
 
 int
 likespage(int flags)
 {
-	if (!createfile(likes_content_output))
-	{
-		fprintf(stderr, "unable to generate likespage\n");
-		return 0;
-	}
-
-	char date[255];
-	struct fileorstring index = {likes_content, NULL};
-	struct fileorstring title = {NULL, likes_title};
-	struct fileorstring info = {NULL, likes_info};
-	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
-	if (!replaceinpage(likes_content_output, content_string, &index) ||
-			!replaceinpage(likes_content_output, title_string, &title) ||
-			!replaceinpage(likes_content_output, info_string, &info) ||
-			!replaceinpage(likes_content_output, time_string, &time))
-	{
-		fprintf(stderr, "unable to generate likespage\n");
-		return 0;
-	}
-
-	return 1;
+	int ret = genericpage(flags, likes_content_output, likes_content, likes_title, likes_info);
+	return ret;
 }
 
 int
 dislikespage(int flags)
 {
-	if (!createfile(dislikes_content_output))
-	{
-		fprintf(stderr, "unable to generate dislikespage\n");
-		return 0;
-	}
-
-	char date[255];
-	struct fileorstring index = {dislikes_content, NULL};
-	struct fileorstring title = {NULL, dislikes_title};
-	struct fileorstring info = {NULL, dislikes_info};
-	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
-	if (!replaceinpage(dislikes_content_output, content_string, &index) ||
-			!replaceinpage(dislikes_content_output, title_string, &title) ||
-			!replaceinpage(dislikes_content_output, info_string, &info) ||
-			!replaceinpage(dislikes_content_output, time_string, &time))
-	{
-		fprintf(stderr, "unable to generate dislikespage\n");
-		return 0;
-	}
-
-	return 1;
+	int ret = genericpage(flags, dislikes_content_output, dislikes_content, dislikes_title, dislikes_info);
+	return ret;
 }
 
 int
 interestingpage(int flags)
 {
-	if (!createfile(interesting_content_output))
-	{
-		fprintf(stderr, "unable to generate interestingspage\n");
-		return 0;
-	}
-
-	char date[255];
-	struct fileorstring index = {interesting_content, NULL};
-	struct fileorstring title = {NULL, interesting_title};
-	struct fileorstring info = {NULL, interesting_info};
-	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
-	if (!replaceinpage(interesting_content_output, content_string, &index) ||
-			!replaceinpage(interesting_content_output, title_string, &title) ||
-			!replaceinpage(interesting_content_output, info_string, &info) ||
-			!replaceinpage(interesting_content_output, time_string, &time))
-	{
-		fprintf(stderr, "unable to generate interestingpage\n");
-		return 0;
-	}
-
-	return 1;
+	int ret = genericpage(flags, interesting_content_output, interesting_content, interesting_title, interesting_info);
+	return ret;
 }
 
 int
 opinionspage(int flags)
 {
-	if (!createfile(opinions_content_output))
-	{
-		fprintf(stderr, "unable to generate opinionspage\n");
-		return 0;
-	}
-
-	char date[255];
-	struct fileorstring index = {opinions_content, NULL};
-	struct fileorstring title = {NULL, opinions_title};
-	struct fileorstring info = {NULL, opinions_info};
-	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
-	if (!replaceinpage(opinions_content_output, content_string, &index) ||
-			!replaceinpage(opinions_content_output, title_string, &title) ||
-			!replaceinpage(opinions_content_output, info_string, &info) ||
-			!replaceinpage(opinions_content_output, time_string, &time))
-	{
-		fprintf(stderr, "unable to generate opinionspage\n");
-		return 0;
-	}
-
-	return 1;
+	int ret = genericpage(flags, opinions_content_output, opinions_content, opinions_title, opinions_info);
+	return ret;
 }
 
 int
 opinions_animepage(int flags)
 {
-	if (!createfile(opinions_anime_content_output))
-	{
-		fprintf(stderr, "unable to generate opinions_animepage\n");
-		return 0;
-	}
-
-	char date[255];
-	struct fileorstring index = {opinions_anime_content, NULL};
-	struct fileorstring title = {NULL, opinions_anime_title};
-	struct fileorstring info = {NULL, opinions_anime_info};
-	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
-	if (!replaceinpage(opinions_anime_content_output, content_string, &index) ||
-			!replaceinpage(opinions_anime_content_output, title_string, &title) ||
-			!replaceinpage(opinions_anime_content_output, info_string, &info) ||
-			!replaceinpage(opinions_anime_content_output, time_string, &time))
-	{
-		fprintf(stderr, "unable to generate opinions_animepage\n");
-		return 0;
-	}
-
-	return 1;
+	int ret = genericpage(flags, opinions_anime_content_output, opinions_anime_content, opinions_anime_title, opinions_anime_info);
+	return ret;
 }
 
 int
 opinions_everythingpage(int flags)
 {
-	if (!createfile(opinions_everything_content_output))
-	{
-		fprintf(stderr, "unable to generate opinions_everythingpage\n");
-		return 0;
-	}
-
-	char date[255];
-	struct fileorstring index = {opinions_everything_content, NULL};
-	struct fileorstring title = {NULL, opinions_everything_title};
-	struct fileorstring info = {NULL, opinions_everything_info};
-	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
-	if (!replaceinpage(opinions_everything_content_output, content_string, &index) ||
-			!replaceinpage(opinions_everything_content_output, title_string, &title) ||
-			!replaceinpage(opinions_everything_content_output, info_string, &info) ||
-			!replaceinpage(opinions_everything_content_output, time_string, &time))
-	{
-		fprintf(stderr, "unable to generate opinions_everythingpage\n");
-		return 0;
-	}
-
-	return 1;
+	int ret = genericpage(flags, opinions_everything_content_output, opinions_everything_content, opinions_everything_title, opinions_everything_info);
+	return ret;
 }
 
 int
 portfoliopage(int flags)
 {
-	if (!createfile(portfolio_content_output))
-	{
-		fprintf(stderr, "unable to generate portfoliopage\n");
-		return 0;
-	}
-
-	char date[255];
-	struct fileorstring index = {portfolio_content, NULL};
-	struct fileorstring title = {NULL, portfolio_title};
-	struct fileorstring info = {NULL, portfolio_info};
-	struct fileorstring time = {NULL, gettime(date, sizeof(date))};
-	if (!replaceinpage(portfolio_content_output, content_string, &index) ||
-			!replaceinpage(portfolio_content_output, title_string, &title) ||
-			!replaceinpage(portfolio_content_output, info_string, &info) ||
-			!replaceinpage(portfolio_content_output, time_string, &time))
-	{
-		fprintf(stderr, "unable to generate portfoliopage\n");
-		return 0;
-	}
-
-	return 1;
+	int ret = genericpage(flags, portfolio_content_output, portfolio_content, portfolio_title, portfolio_info);
+	return ret;
 }
 
-/* post functions */
+/* posts functions */
 
 int
 postscompare(const void *a, const void *b)
@@ -643,9 +518,9 @@ postspage(int flags)
 		sprintf(buff, "%d", posts[x]);
 		strcat(file, buff);
 		strcat(file, ".txt");
-		puts(file);
+		//puts(file);
 		createfile(file);
-		printf("%d\n", posts[x]);
+		//printf("%d\n", posts[x]);
 	}
 
 	return 1;

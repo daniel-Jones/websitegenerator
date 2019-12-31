@@ -41,6 +41,7 @@ char *gettime(char *buffer, size_t size);
 int createtmpfile(const char *name, const char *content, size_t size);
 int makedirectories(const char *basedir, const char *file);
 int postscompare(const void *a, const void *b);
+int genericpage(int flags, const char *ind, const char *out, const char *tit, const char *inf);
 
 /* generators (to be put into the pages array) */
 int frontpage(int flags);

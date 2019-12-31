@@ -94,7 +94,7 @@ static const int 	posts_per_page = 10;
 
 /* each page to be generated go into this array */
 static const struct page pages[] = {
-/*	function	flags 	*/
+/*	function			flags 	*/
 	{frontpage,			NONE},
 	{likespage,			NONE},
 	{dislikespage,			NONE},
