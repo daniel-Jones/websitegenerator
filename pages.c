@@ -413,57 +413,49 @@ genericpage(int flags, const char *output, const char *ind, const char *tit, con
 int
 frontpage(int flags)
 {
-	int ret = genericpage(flags, frontpage_index_output, frontpage_index, frontpage_title, frontpage_info);
-	return ret;
+	return genericpage(flags, frontpage_index_output, frontpage_index, frontpage_title, frontpage_info);
 }
 
 int
 likespage(int flags)
 {
-	int ret = genericpage(flags, likes_content_output, likes_content, likes_title, likes_info);
-	return ret;
+	return genericpage(flags, likes_content_output, likes_content, likes_title, likes_info);
 }
 
 int
 dislikespage(int flags)
 {
-	int ret = genericpage(flags, dislikes_content_output, dislikes_content, dislikes_title, dislikes_info);
-	return ret;
+	return genericpage(flags, dislikes_content_output, dislikes_content, dislikes_title, dislikes_info);
 }
 
 int
 interestingpage(int flags)
 {
-	int ret = genericpage(flags, interesting_content_output, interesting_content, interesting_title, interesting_info);
-	return ret;
+	return genericpage(flags, interesting_content_output, interesting_content, interesting_title, interesting_info);
 }
 
 int
 opinionspage(int flags)
 {
-	int ret = genericpage(flags, opinions_content_output, opinions_content, opinions_title, opinions_info);
-	return ret;
+	return genericpage(flags, opinions_content_output, opinions_content, opinions_title, opinions_info);
 }
 
 int
 opinions_animepage(int flags)
 {
-	int ret = genericpage(flags, opinions_anime_content_output, opinions_anime_content, opinions_anime_title, opinions_anime_info);
-	return ret;
+	return genericpage(flags, opinions_anime_content_output, opinions_anime_content, opinions_anime_title, opinions_anime_info);
 }
 
 int
 opinions_everythingpage(int flags)
 {
-	int ret = genericpage(flags, opinions_everything_content_output, opinions_everything_content, opinions_everything_title, opinions_everything_info);
-	return ret;
+	return genericpage(flags, opinions_everything_content_output, opinions_everything_content, opinions_everything_title, opinions_everything_info);
 }
 
 int
 portfoliopage(int flags)
 {
-	int ret = genericpage(flags, portfolio_content_output, portfolio_content, portfolio_title, portfolio_info);
-	return ret;
+	return genericpage(flags, portfolio_content_output, portfolio_content, portfolio_title, portfolio_info);
 }
 
 /* posts functions */
