@@ -463,7 +463,6 @@ createdirectpages(int *posts, size_t totalposts)
 
 	char file[512];
 	char source[512];
-	char buff[128];
 	for (int x = 1; x < totalposts; x++)
 	{
 		memset(source, 0, 1);
@@ -488,6 +487,40 @@ createdirectpages(int *posts, size_t totalposts)
 		//printf("%d\n", posts[x]);
 	}
 	return 1;
+}
+#include <math.h>
+char
+*generatepagebar(char *bar, size_t size, int *posts, size_t totalposts, int currentpage)
+{
+	/*
+	 * create a navigation bar for the posts pages highlighting the 'currentpage' link
+	 * store it in bar and return it, NULL on error
+	 */
+	char buff[size];
+	int i;
+	size_t freespace = size;
+	/* determine how many pages we need */
+	int pagecount = (totalposts%posts_per_page == 0) ? totalposts/posts_per_page : totalposts/posts_per_page+1;
+	/* gross hack, sxprintf returns the number of chars written, keep track of our freespace */
+	freespace -= snprintf(buff, freespace, "<div class='middle'> <a href='%d.html'>prev</a>", (currentpage == 1) ? pagecount : currentpage-1);
+	strncat(bar, buff, freespace);
+	for (int i = 1; i < pagecount; i++)
+	{
+		// FIXME: this doesn't need to be an if/else..
+		if (currentpage == i)
+		{
+			freespace -= snprintf(buff, freespace, "<strong><i><a href='%d.html'>%d</a></i></strong> ", i, i);
+		}
+		else
+		{
+			freespace -= snprintf(buff, freespace, "<a href='%d.html'>%d</a> ", i, i);
+		}
+		strncat(bar, buff, freespace);
+	}
+	freespace -= snprintf(buff, freespace, "<div class='middle'> <a href='%d.html'>next</a>", (currentpage == pagecount) ? 1 : currentpage+1);
+	strncat(bar, buff, freespace);
+	printf("%s: %ld pages = %d\n", bar, freespace, pagecount);
+	return bar;
 }
 
 int
@@ -537,11 +570,14 @@ postspage(int flags)
 	/* sort posts */
 	qsort(posts, totalposts, sizeof(int), postscompare);
 
+	/* create direct link pages */
 	if (!createdirectpages(posts, totalposts))
 	{
 		fprintf(stderr, "unable to create direct post pages, unrecoverable failure\n");
 		return 0;
 	}
 
+	char pagebar[1024] = {0};
+	generatepagebar(pagebar, 1024, posts, totalposts, 1);
 	return 1;
 }

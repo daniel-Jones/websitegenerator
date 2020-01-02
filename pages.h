@@ -43,6 +43,7 @@ int makedirectories(const char *basedir, const char *file);
 int postscompare(const void *a, const void *b);
 int genericpage(int flags, const char *ind, const char *out, const char *tit, const char *inf);
 int createdirectpages(int *posts, size_t totalposts);
+char *generatepagebar(char *bar, size_t size, int *posts, size_t totalposts, int currentpage);
 
 /* generators (to be put into the pages array) */
 int frontpage(int flags);
