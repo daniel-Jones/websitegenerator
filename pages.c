@@ -467,6 +467,47 @@ postscompare(const void *a, const void *b)
 }
 
 int
+createdirectpages(int *posts, size_t totalposts)
+{
+	/*
+	 * create direct post files for each post
+	 */
+
+	char file[512];
+	char source[512];
+	char buff[128];
+	for (int x = 1; x < totalposts; x++)
+	{
+		memset(source, 0, 1);
+		memset(file, 0, 1);
+		memset(buff, 0, 1);
+		/* output file */
+		strcat(file, direct_output_dir);
+		sprintf(buff, "%d.html", posts[x]);
+		strcat(file, buff);
+
+		/* source file */
+		strcat(source, posts_content);
+		sprintf(buff, "%d.txt", posts[x]);
+		strcat(source, buff);
+
+		if (!createfile(file))
+		{
+			fprintf(stderr, "unable to create file '%s', unrecoverable failure\n", file);
+			return 0;
+		}
+
+		if (!genericpage(NONE, file, source, posts_title, posts_info))
+		{
+			fprintf(stderr, "unable to generate direct post page '%s', unrecoverable failure\n", file);
+			return 0;
+		}
+		//printf("%d\n", posts[x]);
+	}
+	return 1;
+}
+
+int
 postspage(int flags)
 {
 	/*
@@ -512,19 +553,11 @@ postspage(int flags)
 
 	/* sort posts */
 	qsort(posts, totalposts, sizeof(int), postscompare);
-	char file[512];
-	char buff[128];
-	for (int x = 1; x < totalposts; x++)
+
+	if (!createdirectpages(posts, totalposts))
 	{
-		memset(file, 0, 1);
-		memset(buff, 0, 1);
-		strcat(file, posts_output_dir);
-		sprintf(buff, "%d", posts[x]);
-		strcat(file, buff);
-		strcat(file, ".txt");
-		//puts(file);
-		createfile(file);
-		//printf("%d\n", posts[x]);
+		fprintf(stderr, "unable to create direct post pages, unrecoverable failure\n");
+		return 0;
 	}
 
 	return 1;
