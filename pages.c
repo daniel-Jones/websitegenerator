@@ -56,10 +56,7 @@ createfile(const char *file)
 		fprintf(stderr, "OK\n");
 	}
 	char filename[512] = {0};
-	size_t length = 512;
-	strncat(filename, output_dir, length-1);
-	length = length - strlen(output_dir);
-	strncat(filename, file, length-1);
+	snprintf(filename, 512, "%s%s", output_dir, file);
 
 	FILE *out = fopen(filename, "w");
 	if (!out)
@@ -105,10 +102,7 @@ findstring(const char *file, const char *str)
 	long offset = -1;
 
 	char filename[512] = {0};
-	size_t length = 512;
-	strncat(filename, output_dir, length-1);
-	length = length - strlen(output_dir);
-	strncat(filename, file, length-1);
+	snprintf(filename, 512, "%s%s", output_dir, file);
 
 	FILE *in = fopen(filename, "r");
 	if (!in)
@@ -163,10 +157,7 @@ deletebytes(const char *file, long offset, size_t bytes)
 	 */
 
 	char filename[512] = {0};
-	size_t length = 512;
-	strncat(filename, output_dir, length-1);
-	length = length - strlen(output_dir);
-	strncat(filename, file, length-1);
+	snprintf(filename, 512, "%s%s", output_dir, file);
 
 	FILE *in = fopen(filename, "r");
 	if (!in)
@@ -229,10 +220,7 @@ writeatbyte(const char *dest, struct fileorstring *source, long offset)
 	 * return 1 on success. 0 on failure
 	 */
 	char filename[512] = {0};
-	size_t length = 512;
-	strncat(filename, output_dir, length-1);
-	length = length - strlen(output_dir);
-	strncat(filename, dest, length-1);
+	snprintf(filename, 512, "%s%s", output_dir, dest);
 
 	FILE *in = fopen(filename, "r");
 	if (!in)
@@ -480,16 +468,11 @@ createdirectpages(int *posts, size_t totalposts)
 	{
 		memset(source, 0, 1);
 		memset(file, 0, 1);
-		memset(buff, 0, 1);
 		/* output file */
-		strcat(file, direct_output_dir);
-		sprintf(buff, "%d.html", posts[x]);
-		strcat(file, buff);
+		snprintf(file, 512, "%s%d.html", direct_output_dir, posts[x]);
 
 		/* source file */
-		strcat(source, posts_content);
-		sprintf(buff, "%d.txt", posts[x]);
-		strcat(source, buff);
+		snprintf(source, 512, "%s%d.txt", posts_content, posts[x]);
 
 		if (!createfile(file))
 		{
