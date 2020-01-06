@@ -515,11 +515,11 @@ char
 		}
 		else
 		{
-			freespace -= snprintf(buff, freespace, "<a href='%d.html'>%d</a> ", i, i);
+			freespace -= snprintf(buff, freespace, "<a href='%d'>%d</a> ", i, i);
 		}
 		strncat(bar, buff, freespace);
 	}
-	freespace -= snprintf(buff, freespace, "<a href='%d.html'>next</a></div>", (currentpage == pagecount) ? 1 : currentpage+1);
+	freespace -= snprintf(buff, freespace, "<a href='%d'>next</a></div>", (currentpage == pagecount) ? 1 : currentpage+1);
 	if (freespace <= 0) {fprintf(stderr, "out of space in buffer for generatepagebar()\n"); return NULL;}
 	strncat(bar, buff, freespace);
 	return bar;
