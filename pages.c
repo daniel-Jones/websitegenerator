@@ -323,6 +323,10 @@ replaceinpage(const char *outfile, const char *toreplace, struct fileorstring *s
 	 * return 1 on success, 0 on failure
 	 */
 
+	/* special case for ignoring a call so we can reuse the function */
+	if (source->file == NULL && source->str == NULL)
+		return 1;
+
 	long substrpos = -1;
 
 	substrpos = findstring(outfile, toreplace);
@@ -455,7 +459,7 @@ postscompare(const void *a, const void *b)
 }
 
 int
-createdirectpages(int *posts, size_t totalposts)
+createdirectpages(const int *posts, size_t totalposts)
 {
 	/*
 	 * create direct post files for each post
@@ -488,9 +492,8 @@ createdirectpages(int *posts, size_t totalposts)
 	}
 	return 1;
 }
-#include <math.h>
 char
-*generatepagebar(char *bar, size_t size, int *posts, size_t totalposts, int currentpage)
+*generatepagebar(char *bar, size_t size, const int *posts, size_t totalposts, int currentpage, int pagecount)
 {
 	/*
 	 * create a navigation bar for the posts pages highlighting the 'currentpage' link
@@ -499,17 +502,16 @@ char
 	char buff[size];
 	int i;
 	size_t freespace = size;
-	/* determine how many pages we need */
-	int pagecount = (totalposts%posts_per_page == 0) ? totalposts/posts_per_page : totalposts/posts_per_page+1;
 	/* gross hack, sxprintf returns the number of chars written, keep track of our freespace */
-	freespace -= snprintf(buff, freespace, "<div class='middle'> <a href='%d.html'>prev</a>", (currentpage == 1) ? pagecount : currentpage-1);
+	freespace -= snprintf(buff, freespace, "<div class='middle'> <a href='%d.html'>prev</a> ", (currentpage == 1) ? pagecount : currentpage-1);
+	if (freespace <= 0) {fprintf(stderr, "out of space in buffer for generatepagebar()\n"); return NULL;}
 	strncat(bar, buff, freespace);
-	for (int i = 1; i < pagecount; i++)
+	for (int i = 1; i <= pagecount; i++)
 	{
 		// FIXME: this doesn't need to be an if/else..
 		if (currentpage == i)
 		{
-			freespace -= snprintf(buff, freespace, "<strong><i><a href='%d.html'>%d</a></i></strong> ", i, i);
+			freespace -= snprintf(buff, freespace, "<strong><i>%d</i></strong> ", i);
 		}
 		else
 		{
@@ -517,10 +519,125 @@ char
 		}
 		strncat(bar, buff, freespace);
 	}
-	freespace -= snprintf(buff, freespace, "<div class='middle'> <a href='%d.html'>next</a>", (currentpage == pagecount) ? 1 : currentpage+1);
+	freespace -= snprintf(buff, freespace, "<a href='%d.html'>next</a></div>", (currentpage == pagecount) ? 1 : currentpage+1);
+	if (freespace <= 0) {fprintf(stderr, "out of space in buffer for generatepagebar()\n"); return NULL;}
 	strncat(bar, buff, freespace);
-	printf("%s: %ld pages = %d\n", bar, freespace, pagecount);
 	return bar;
+}
+
+int
+writeposts(const int *posts, size_t totalposts, const char *outfile, int currentpage, int pagecount)
+{
+	/*
+	 * write posts into 'output_dir'/'outfile'
+	 * return 1 on success, 0 on failure
+	 */
+	char outfilename[512] = {0};
+	snprintf(outfilename, 512, "%s%s", output_dir, outfile);
+	char pagebar[512] = {0};
+	if (generatepagebar(pagebar, 512, posts, totalposts, currentpage, pagecount) == NULL)
+	{
+			fprintf(stderr, "unable to generate pagebar for %s, unrecoverable failure\n", outfilename);
+			return 0;
+	}
+
+	int start;
+	int stop;
+	start = 1 + (posts_per_page * currentpage) - posts_per_page;
+	stop = start + posts_per_page;
+	while (stop > (totalposts))
+		stop--;
+
+	printf("page number is %d, post range is %d-%d, output is: %s\n", currentpage, start, stop, outfilename);
+	int post;
+	/* write posts to a temp file */
+	char source[512];
+	FILE *postfile;
+	FILE *tmp = fopen("post.tmp", "a");
+	if (!tmp)
+	{
+		fprintf(stderr, "unable to open temp file, unrecoverable failure\n");
+		return 0;
+	}
+	fprintf(tmp, "%s\n", pagebar);
+	for (int x = start; x < stop; x++)
+	{
+		/*
+		 * post is the index into posts[] we actually want
+		 * we do this because we want page 1 to contain the last blog posts not actually the first and so on
+		 */
+		post = totalposts - posts[x];
+		printf("page %d gets %d.txt\n", currentpage, post);
+		fprintf(tmp, "post #%d<br>\n<a href='direct/%d.html'>direct link</a><br>\n", post, post);
+		snprintf(source, 512, "%s%d.txt", posts_content, post);
+		postfile = fopen(source, "r");
+		if (!postfile)
+		{
+			fprintf(stderr, "unable to open temp file, unrecoverable failure\n");
+			fclose(tmp);
+			return 0;
+		}
+		char c;
+		while ((c = fgetc(postfile)) != EOF)
+		{
+			fputc(c, tmp);
+		}
+		fprintf(tmp, "<hr>\n");
+		fclose(postfile);
+	}
+	fprintf(tmp, "%s\n", pagebar);
+	fclose(tmp);
+	struct fileorstring replacement = {"post.tmp", NULL};
+	if (!replaceinpage(outfile, content_string, &replacement))
+	{
+		fprintf(stderr, "unable to replace content in %s, unrecoverable failure\n", outfilename);
+		return 0;
+	}
+
+	if (remove("post.tmp") == -1)
+	{
+		fprintf(stderr, "unable to remove temp file (post.tmp), unrecoverable failure\n");
+		return 0;
+	}
+
+	return 1;
+}
+
+int
+generatepostpages(const int *posts, size_t totalposts, int pagecount)
+{
+	/*
+	 * create each blog page, there will be 'pagecount' of them
+	 * containing 'posts_per_page' posts each
+	 * return 1 on success, 0 on failure
+	 */
+
+	char outfilename[512] = {0};
+	int postswritten = 0;
+
+	for (int i = 1; i <= pagecount; i++)
+	{
+		/* loop through and create every post page required */
+		snprintf(outfilename, 512, "%s%d.html", posts_output_dir, i);
+		if (!createfile(outfilename))
+		{
+			fprintf(stderr, "unable to create file '%s', unrecoverable failure\n", outfilename);
+			return 0;
+		}
+
+		if (!genericpage(NONE, outfilename, NULL, posts_title, posts_info))
+		{
+			fprintf(stderr, "unable to create generic page '%s', unrecoverable failure\n", outfilename);
+			return 0;
+		}
+		if (!writeposts(posts, totalposts, outfilename, i, pagecount))
+		{
+			fprintf(stderr, "unable to create write posts to page %d', unrecoverable failure\n", i);
+			return 0;
+		}
+	}
+
+	return 1;
 }
 
 int
@@ -563,7 +680,7 @@ postspage(int flags)
 	{
 		/* could not open directory */
 		fprintf(stderr, "Error opening directory: %s\n", strerror(errno));
-		fprintf(stderr, "unable to open file '%s', unrecoverable failure\n", posts_content);
+		fprintf(stderr, "unable to open directory '%s', unrecoverable failure\n", posts_content);
 		return 0;
 	}
 
@@ -577,7 +694,12 @@ postspage(int flags)
 		return 0;
 	}
 
-	char pagebar[1024] = {0};
-	generatepagebar(pagebar, 1024, posts, totalposts, 1);
+	/* determine how many pages we need, if total posts divided by 'posts_per_page' isn't 0, we need 'posts_per_page'+1 pages */
+	int pagecount = (totalposts%posts_per_page == 0) ? totalposts/posts_per_page : totalposts/posts_per_page+1;
+	if (!generatepostpages(posts, totalposts, pagecount))
+	{
+		fprintf(stderr, "unable to create post pages, unrecoverable failure\n");
+		return 0;
+	}
 	return 1;
 }

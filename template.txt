@@ -47,7 +47,7 @@ div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-
 </div>
 <!-- <br><br> <div class="middle"> <img src="https://danieljon.es/linuxfreak.png"> <br> <a id="gentag" href="https://gitlab.com/ubunchu-translators/ubunchu">source</a> </div> -->
 <br><br> <div class="middle"> <a href="https://www.fsf.org/"><img src="https://danieljon.es/media/fsf_member.png" alt="FSF member"></a></div>
-<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/website/">sitegenerator</a></div>
-<a href="https://danieljon.es/cirno"><img src="https://danieljon.es/media/do_you_want_to_talk.png" style="position: fixed; right: 0%; bottom: -0px; width: 10%; height: auto;"></a>
+<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/websitegenerator/">websitegenerator in C</a></div>
+<a href="https://danieljon.es/cirno"><img src="https://danieljon.es/media/do_you_want_to_talk.png" style="z-index: -1; position: fixed; right: 0%; bottom: -0px; width: 10%; height: auto;"></a>
 </body>
 </html>

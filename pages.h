@@ -42,8 +42,10 @@ int createtmpfile(const char *name, const char *content, size_t size);
 int makedirectories(const char *basedir, const char *file);
 int postscompare(const void *a, const void *b);
 int genericpage(int flags, const char *ind, const char *out, const char *tit, const char *inf);
-int createdirectpages(int *posts, size_t totalposts);
-char *generatepagebar(char *bar, size_t size, int *posts, size_t totalposts, int currentpage);
+int createdirectpages(const int *posts, size_t totalposts);
+char *generatepagebar(char *bar, size_t size, const int *posts, size_t totalposts, int currentpage, int pagecount);
+int generatepostpages(const int *posts, size_t totalposts, int pagecount);
+int writeposts(const int *posts, size_t totalposts, const char *outfile, int currentpage, int pagecount);
 
 /* generators (to be put into the pages array) */
 int frontpage(int flags);
