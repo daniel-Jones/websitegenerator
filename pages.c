@@ -503,7 +503,7 @@ char
 	int i;
 	size_t freespace = size;
 	/* gross hack, sxprintf returns the number of chars written, keep track of our freespace */
-	freespace -= snprintf(buff, freespace, "<div class='middle'> <a href='%d.html'>prev</a> ", (currentpage == 1) ? pagecount : currentpage-1);
+	freespace -= snprintf(buff, freespace, "<div class='middle'> <a href='%d'>prev</a> ", (currentpage == 1) ? pagecount : currentpage-1);
 	if (freespace <= 0) {fprintf(stderr, "out of space in buffer for generatepagebar()\n"); return NULL;}
 	strncat(bar, buff, freespace);
 	for (int i = 1; i <= pagecount; i++)
@@ -548,7 +548,7 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 	while (stop > (totalposts))
 		stop--;
 
-	printf("page number is %d, post range is %d-%d, output is: %s\n", currentpage, start, stop, outfilename);
+	printf("page number is %d\n", currentpage);
 	int post;
 	/* write posts to a temp file */
 	char source[512];
