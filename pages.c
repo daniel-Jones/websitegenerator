@@ -548,7 +548,6 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 	while (stop > (totalposts))
 		stop--;
 
-	printf("page number is %d\n", currentpage);
 	int post;
 	/* write posts to a temp file */
 	char source[512];
@@ -567,7 +566,6 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 		 * we do this because we want page 1 to contain the last blog posts not actually the first and so on
 		 */
 		post = totalposts - posts[x];
-		printf("page %d gets %d.txt\n", currentpage, post);
 		fprintf(tmp, "post #%d<br>\n<a href='direct/%d.html'>direct link</a><br>\n", post, post);
 		snprintf(source, 512, "%s%d.txt", posts_content, post);
 		postfile = fopen(source, "r");
