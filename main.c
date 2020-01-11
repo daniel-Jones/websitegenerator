@@ -22,7 +22,11 @@ main(void)
 {
 	for (size_t i = 0; i < sizeof(pages)/sizeof(pages[0]); i++)
 	{
-		pages[i].function(pages[i].flags);
+		if (!pages[i].function(pages[i].flags))
+		{
+			fprintf(stderr, "error generating website\n");
+			return 1;
+		}
 	}
 	return 0;
 }

@@ -94,6 +94,9 @@ static const char 	*direct_output_dir = "posts/direct/";
 static const int 	posts_per_page = 10;
 static const int 	ignore[] = {}; /* ignore these posts */
 
+/* rss */
+static const char 	*rss_output = "posts/posts.rss";
+
 /* each page to be generated go into this array */
 static const struct page pages[] = {
 /*	function			flags 	*/
@@ -106,6 +109,7 @@ static const struct page pages[] = {
 	{opinions_everythingpage,	NONE},
 	{portfoliopage,			NONE},
 	{postspage,			NONE},
+	{rsspage,			NONE},
 };
 
 #endif

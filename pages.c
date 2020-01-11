@@ -25,15 +25,27 @@ makedirectories(const char *basedir, const char *file)
 	 */
 	// TODO: implement
 	char buffer[512];
+	struct stat sb = {0};
+
+	if(!stat(output_dir, &sb) == 0 && !S_ISDIR(sb.st_mode))
+	{
+		fprintf(stderr, "directory '%s' does not exist, trying to make directory..\n", output_dir);
+		if (mkdir(output_dir, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0)
+		{
+			fprintf(stderr, "unable to mkdir '%s', unrecoverable failure\n", output_dir);
+			return 0;
+		}
+		fprintf(stderr, "OK\n");
+	}
 
 	return 1;
 }
 
 int
-createfile(const char *file)
+createfile(const char *file, const char *template)
 {
 	/*
-	 * create file at location 'output_dir'/file' using the template
+	 * create file at location 'output_dir'/file' using the template 'template'
 	 * overwrite if it exists
 	 * assume the caller has put us in the base directory already
 	 */
@@ -42,7 +54,12 @@ createfile(const char *file)
 	 * FIXME: if trying to create a file with subdirectories it will not work
 	 * one day tokenise the file path and make them
 	 */
+	if (!makedirectories(output_dir, file))
+	{
 
+		fprintf(stderr, "unable to create directories for '%s/%s', unrecoverable failure\n", output_dir, file);
+		return 0;
+	}
 	struct stat sb = {0};
 
 	if(!stat(output_dir, &sb) == 0 && !S_ISDIR(sb.st_mode))
@@ -66,7 +83,7 @@ createfile(const char *file)
 		return 0;
 	}
 
-	FILE *in = fopen(template_file, "r");
+	FILE *in = fopen(template, "r");
 	if (!in)
 	{
 		fprintf(stderr, "Error opening file: %s\n", strerror(errno));
@@ -378,9 +395,9 @@ createtmpfile(const char *name, const char *content, size_t size)
 int
 genericpage(int flags, const char *output, const char *ind, const char *tit, const char *inf)
 {
-	if (!createfile(output))
+	if (!createfile(output, template_file))
 	{
-		fprintf(stderr, "unable to generate frontpage\n");
+		fprintf(stderr, "unable to generate genericpage\n");
 		return 0;
 	}
 
@@ -477,7 +494,7 @@ createdirectpages(const int *posts, size_t totalposts)
 		/* source file */
 		snprintf(source, 512, "%s%d.txt", posts_content, posts[x]);
 
-		if (!createfile(file))
+		if (!createfile(file, template_file))
 		{
 			fprintf(stderr, "unable to create file '%s', unrecoverable failure\n", file);
 			return 0;
@@ -617,7 +634,7 @@ generatepostpages(const int *posts, size_t totalposts, int pagecount)
 	{
 		/* loop through and create every post page required */
 		snprintf(outfilename, 512, "%s%d.html", posts_output_dir, i);
-		if (!createfile(outfilename))
+		if (!createfile(outfilename, template_file))
 		{
 			fprintf(stderr, "unable to create file '%s', unrecoverable failure\n", outfilename);
 			return 0;
@@ -699,5 +716,15 @@ postspage(int flags)
 		fprintf(stderr, "unable to create post pages, unrecoverable failure\n");
 		return 0;
 	}
+	return 1;
+}
+
+/* rss */
+int
+rsspage(int flags)
+{
+	/*
+	 * generate an rss feed for our blog/posts
+	 */
 	return 1;
 }

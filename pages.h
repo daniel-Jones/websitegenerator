@@ -32,7 +32,7 @@ struct fileorstring
 };
 
 /* helpers */
-int createfile(const char *file);
+int createfile(const char *file, const char *template);
 long findstring(const char *file, const char *str);
 int deletebytes(const char *file, long offset, size_t bytes);
 int writeatbyte(const char *dest, struct fileorstring *source, long offset);
@@ -57,5 +57,6 @@ int opinions_animepage(int flags);
 int opinions_everythingpage(int flags);
 int portfoliopage(int flags);
 int postspage(int flags);
+int rsspage(int flags);
 
 #endif
