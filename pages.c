@@ -278,7 +278,7 @@ writeatbyte(const char *dest, struct fileorstring *source, long offset)
 	 * rename file 'tmp' 'filename'
 	 */
 
-	char c, t, a;
+	int c, t, a;
 	long curpos = 1;
 	int i = 0;
 	while ((c = fgetc(in)) != EOF)
@@ -716,15 +716,150 @@ postspage(int flags)
 		fprintf(stderr, "unable to create post pages, unrecoverable failure\n");
 		return 0;
 	}
+
+	/* generate rss feed if required */
+	if (flags & RSS)
+	{
+		generaterss(posts, totalposts);
+	}
 	return 1;
 }
 
 /* rss */
+
+char
+*striphtml(char *str, size_t size)
+{
+	/*
+	 * strip html tags from 'str'
+	 * dont copy newline
+	 * return pointer to 'str'
+	 */
+	int idx = 0;
+	int opened = 0; // false
+	for(size_t i = 0; i < size; i++)
+	{
+		if(str[i] == '<')
+		{
+			opened = 1; // true
+		}
+		else if (str[i] == '>')
+		{
+			opened = 0; // false
+		}
+		else if (!opened)
+		{
+			str[idx++] = str[i];
+		}
+	}
+	str[idx] = '\0';
+	if (str[idx-1] == '\n')
+		str[idx-1] = '\0';
+	return str;
+}
 int
-rsspage(int flags)
+writerss(FILE *out, int post)
+{
+	/*
+	 * create rss item using 'post_content'/'posts'.txt into FILE 'out'
+	 * return 1 on success, 0 on fail
+	 */
+
+	if (!out)
+		return 0;
+	char buff[512];
+	snprintf(buff, 512, "%s/%d.txt", posts_content, post);
+	FILE *in = fopen(buff, "r");
+	if (!in)
+	{
+		fprintf(stderr, "unable to open file %s, unrecoverable failure\n", buff);
+		return 0;
+	}
+
+	char line[4096];
+	char title[512] = {0};
+	char date[512] = {0};
+	char description[512] = {0};
+	char item[4096] = {0};
+	int pos = 0;
+	while ((fgets(line, 4096, in)) != NULL)
+	{
+		if (pos == 0)
+		{
+			/* should be the title */
+			strncpy(title, line, 512);
+		}
+		if (pos == 1)
+		{
+			/* should be the title */
+			strncpy(date, line, 512);
+		}
+
+		if (pos >= 2 && (title == NULL || date == NULL))
+		{
+			fprintf(stderr, "post %s has a broken format, please fix it\n", buff);
+			fclose(in);
+			return 0;
+		}
+		if (pos == 3)
+		{
+			strncpy(description, line, 100);
+		}
+		pos++;
+	}
+	striphtml(title, strlen(title));
+	striphtml(date, strlen(date));
+	striphtml(description, strlen(description));
+	strcat(description, " ...");
+	//printf("title is: %s date is: %s: desc is: %s\n", title, date, description);
+	snprintf(item, 4096, "<item>\n\t<title>%s</title>\n\t<pubDate>%s</pubDate>\n\t<link>https://danieljon.es/posts/direct/%d</link>\n\t<guid>https://danieljon.es/posts/direct/%d</guid>\n\t<description>%s</description>\n</item>\n", title, date, post, post, description);
+
+	fprintf(out, "%s", item);
+	fclose(in);
+	return 1;
+}
+
+int
+generaterss(const int *posts, size_t totalposts)
 {
 	/*
 	 * generate an rss feed for our blog/posts
 	 */
+
+	if (!createfile(rss_output, rss_template))
+	{
+		fprintf(stderr, "unable to create %s, unrecoverable failure\n", rss_output);
+		return 0;
+	}
+
+	/* open a temporary file for writing items to */
+	FILE *tmp = fopen("rss.tmp", "w+");
+	if (!tmp)
+	{
+		fprintf(stderr, "unable to create %s, unrecoverable failure\n", "rss.tmp");
+		return 0;
+	}
+
+	/* loop through each post and write an rss file to our open file */
+	int i;
+	int towrite = post_count;
+	while (towrite > totalposts)
+		towrite--;
+	for (i = 1; i < towrite; i++)
+	{
+		if (!writerss(tmp, (totalposts - posts[i])))
+			return 0;
+	}
+
+	struct fileorstring src = {"rss.tmp", NULL};
+
+	if (!replaceinpage(rss_output, rss_string, &src))
+	{
+		fprintf(stderr, "unable to replace %s in %s, unrecoverable failure\n", rss_string, rss_output);
+		return 0;
+	}
+
+	fclose(tmp);
+	//remove("rss.tmp");
 	return 1;
 }

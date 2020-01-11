@@ -46,6 +46,9 @@ int createdirectpages(const int *posts, size_t totalposts);
 char *generatepagebar(char *bar, size_t size, const int *posts, size_t totalposts, int currentpage, int pagecount);
 int generatepostpages(const int *posts, size_t totalposts, int pagecount);
 int writeposts(const int *posts, size_t totalposts, const char *outfile, int currentpage, int pagecount);
+int generaterss(const int *posts, size_t totalposts);
+int writerss(FILE *out, int post);
+char *striphtml(char *str, size_t size);
 
 /* generators (to be put into the pages array) */
 int frontpage(int flags);
@@ -57,6 +60,5 @@ int opinions_animepage(int flags);
 int opinions_everythingpage(int flags);
 int portfoliopage(int flags);
 int postspage(int flags);
-int rsspage(int flags);
 
 #endif

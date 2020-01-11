@@ -21,6 +21,7 @@
 enum flag
 {
 	NONE	= 0,
+	RSS	= 1,
 };
 
 struct page
@@ -35,6 +36,7 @@ static const char 	*title_string = "{TITLE}";
 static const char 	*content_string = "{CONTENT}";
 static const char 	*info_string = "{INFO}";
 static const char 	*time_string = "{TIME}";
+static const char 	*rss_string = "{ITEMS}";
 static const char 	*template_file = "template.txt";
 
 /* frontpage */
@@ -96,6 +98,8 @@ static const int 	ignore[] = {}; /* ignore these posts */
 
 /* rss */
 static const char 	*rss_output = "posts/posts.rss";
+static const char 	*rss_template = "rss.txt";
+static const int 	post_count = 10;
 
 /* each page to be generated go into this array */
 static const struct page pages[] = {
@@ -108,8 +112,7 @@ static const struct page pages[] = {
 	{opinions_animepage,		NONE},
 	{opinions_everythingpage,	NONE},
 	{portfoliopage,			NONE},
-	{postspage,			NONE},
-	{rsspage,			NONE},
+	{postspage,			RSS},	/* flag RSS to generate RSS feed */
 };
 
 #endif

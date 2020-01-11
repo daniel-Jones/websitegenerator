@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+	<title>danieljon.es posts</title>
+	<link>https://danieljon.es/posts</link>
+	<description>Posts made by daniel_j on https://danieljon.es/posts</description>
+	<generator>https://github.com/daniel-Jones/websitegenerator</generator>
+	{ITEMS}
+</channel>
+</rss>
