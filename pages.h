@@ -15,6 +15,7 @@
 
 #ifndef PAGES_H
 #define PAGES_H
+#define _XOPEN_SOURCE
 
 #include <stdio.h>
 #include <string.h>
@@ -49,6 +50,7 @@ int writeposts(const int *posts, size_t totalposts, const char *outfile, int cur
 int generaterss(const int *posts, size_t totalposts);
 int writerss(FILE *out, int post);
 char *striphtml(char *str, size_t size);
+char *rfc822date(char *date, size_t size);
 
 /* generators (to be put into the pages array) */
 int frontpage(int flags);

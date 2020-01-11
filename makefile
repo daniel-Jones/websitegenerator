@@ -21,5 +21,6 @@ $(TARGET): $(OBJECTS)
 
 clean:
 	-rm -f *.o
+	-rm 0f *.tmp
 	-rm -f $(TARGET)
 

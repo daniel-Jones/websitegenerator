@@ -757,6 +757,23 @@ char
 		str[idx-1] = '\0';
 	return str;
 }
+
+char
+*rfc822date(char *date, size_t size)
+{
+	/*
+	 * convert a dumb d/m/y date string into something rfc822 compliant
+	 * absolutely not portable
+	 */
+	struct tm tm;
+	char buff[size];
+	strptime(date, "%d/%m/%Y", &tm);
+	strftime(buff, size, "%d %b %Y", &tm);
+	strncpy(date, buff, size);
+	snprintf(date, size, "%s 00:00:00 GMT", buff);
+	return date;
+}
+
 int
 writerss(FILE *out, int post)
 {
@@ -811,6 +828,7 @@ writerss(FILE *out, int post)
 	striphtml(date, strlen(date));
 	striphtml(description, strlen(description));
 	strcat(description, " ...");
+	rfc822date(date, 512);
 	//printf("title is: %s date is: %s: desc is: %s\n", title, date, description);
 	snprintf(item, 4096, "<item>\n\t<title>%s</title>\n\t<pubDate>%s</pubDate>\n\t<link>https://danieljon.es/posts/direct/%d</link>\n\t<guid>https://danieljon.es/posts/direct/%d</guid>\n\t<description>%s</description>\n</item>\n", title, date, post, post, description);
 
@@ -853,13 +871,15 @@ generaterss(const int *posts, size_t totalposts)
 
 	struct fileorstring src = {"rss.tmp", NULL};
 
+	/* we need to flush the file, so just close it */
+	fclose(tmp);
+
 	if (!replaceinpage(rss_output, rss_string, &src))
 	{
 		fprintf(stderr, "unable to replace %s in %s, unrecoverable failure\n", rss_string, rss_output);
 		return 0;
 	}
 
-	fclose(tmp);
-	//remove("rss.tmp");
+	remove("rss.tmp");
 	return 1;
 }
