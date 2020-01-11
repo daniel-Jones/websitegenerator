@@ -765,7 +765,7 @@ char
 	 * convert a dumb d/m/y date string into something rfc822 compliant
 	 * absolutely not portable
 	 */
-	struct tm tm;
+	struct tm tm = {0};
 	char buff[size];
 	strptime(date, "%d/%m/%Y", &tm);
 	strftime(buff, size, "%d %b %Y", &tm);
@@ -808,7 +808,7 @@ writerss(FILE *out, int post)
 		}
 		if (pos == 1)
 		{
-			/* should be the title */
+			/* should be the date */
 			strncpy(date, line, 512);
 		}
 
