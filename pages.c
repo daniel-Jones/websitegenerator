@@ -800,7 +800,7 @@ writerss(FILE *out, int post)
 			strncpy(date, line, 512);
 		}
 
-		if (pos >= 2 && (title[0] == 0 || date[0] == 0))
+		if (pos >= 2 && (title[0] == '\n' || date[0] == '\n'))
 		{
 			fprintf(stderr, "post %s has a broken format, please fix it\n", buff);
 			fclose(in);
