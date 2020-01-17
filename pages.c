@@ -27,7 +27,7 @@ makedirectories(const char *basedir, const char *file)
 	char buffer[512];
 	struct stat sb = {0};
 
-	if(!stat(output_dir, &sb) == 0 && !S_ISDIR(sb.st_mode))
+	if(!(stat(output_dir, &sb) == 0) && !S_ISDIR(sb.st_mode))
 	{
 		fprintf(stderr, "directory '%s' does not exist, trying to make directory..\n", output_dir);
 		if (mkdir(output_dir, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0)
@@ -59,18 +59,6 @@ createfile(const char *file, const char *template)
 
 		fprintf(stderr, "unable to create directories for '%s/%s', unrecoverable failure\n", output_dir, file);
 		return 0;
-	}
-	struct stat sb = {0};
-
-	if(!stat(output_dir, &sb) == 0 && !S_ISDIR(sb.st_mode))
-	{
-		fprintf(stderr, "directory '%s' does not exist, trying to make directory..\n", output_dir);
-		if (mkdir(output_dir, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0)
-		{
-			fprintf(stderr, "unable to mkdir '%s', unrecoverable failure\n", output_dir);
-			return 0;
-		}
-		fprintf(stderr, "OK\n");
 	}
 	char filename[512] = {0};
 	snprintf(filename, 512, "%s%s", output_dir, file);
@@ -812,7 +800,7 @@ writerss(FILE *out, int post)
 			strncpy(date, line, 512);
 		}
 
-		if (pos >= 2 && (title == NULL || date == NULL))
+		if (pos >= 2 && (title[0] == 0 || date[0] == 0))
 		{
 			fprintf(stderr, "post %s has a broken format, please fix it\n", buff);
 			fclose(in);
