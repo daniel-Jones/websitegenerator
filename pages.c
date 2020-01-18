@@ -762,6 +762,44 @@ char
 	return date;
 }
 
+char
+*getimage(const char *line, char *buff, size_t size)
+{
+	long pos = 0;
+	size_t linesize = strlen(line);
+	while (((line[pos] != '>') && (line[pos] != '\0'))
+				   && pos < linesize
+				   && pos < size)
+	{
+		buff[pos] = line[pos];
+		pos++;
+	}
+	buff[pos++] = '>';
+	buff[pos++] = '\0';
+	/* check src attribute for relative link and make it absolute */
+	char b1[8] = {0};
+	char newbuff[size-pos]; // ensure we dont exceed size, pos bytes already written
+	char finalbuff[size];
+	memset(finalbuff, 0, size);
+	char *src = strstr(buff, "src=\"");
+	pos = 5; // size of src="
+	if (src)
+	{
+		src += pos;
+		strncpy(b1, src, 4);
+		if (strcmp(b1, "http") != 0) // naively assume an http means a url
+		{
+			fprintf(stderr, "%s: relative path in rss feed, fixing..\n", src);
+			snprintf(newbuff, size-pos, "%s/%s", base_url, src);
+			strncpy(finalbuff, buff, src-buff);
+			strncat(finalbuff, newbuff, size-pos);
+			strncpy(buff, finalbuff, size);
+		}
+	}
+
+	return buff;
+}
+
 int
 writerss(FILE *out, int post)
 {
@@ -784,8 +822,10 @@ writerss(FILE *out, int post)
 	char line[4096];
 	char title[512] = {0};
 	char date[512] = {0};
-	char description[512] = {0};
-	char item[4096] = {0};
+	char description[4096] = {0};
+	char item[8195] = {0};
+	char image[512] = {0};
+	int hasimg = 0;
 	int pos = 0;
 	while ((fgets(line, 4096, in)) != NULL)
 	{
@@ -794,21 +834,33 @@ writerss(FILE *out, int post)
 			/* should be the title */
 			strncpy(title, line, 512);
 		}
-		if (pos == 1)
+		else if (pos == 1)
 		{
 			/* should be the date */
 			strncpy(date, line, 512);
 		}
 
-		if (pos >= 2 && (title[0] == '\n' || date[0] == '\n'))
+		else if (pos >= 2 && (title[0] == '\n' || date[0] == '\n'))
 		{
 			fprintf(stderr, "post %s has a broken format, please fix it\n", buff);
 			fclose(in);
 			return 0;
 		}
-		if (pos == 3)
+		else if (pos == 3)
 		{
 			strncpy(description, line, 100);
+		}
+
+		/* try to find images */
+		else if (pos > 3)
+		{
+			char *img;
+			if ((img = strstr(line, "<img")))
+			{
+				hasimg = 1;
+				getimage(img, image, 1024);
+				break;
+			}
 		}
 		pos++;
 	}
@@ -818,7 +870,14 @@ writerss(FILE *out, int post)
 	strcat(description, " ...");
 	rfc822date(date, 512);
 	//printf("title is: %s date is: %s: desc is: %s\n", title, date, description);
-	snprintf(item, 4096, "<item>\n\t<title>%s</title>\n\t<pubDate>%s</pubDate>\n\t<link>https://danieljon.es/posts/direct/%d</link>\n\t<guid>https://danieljon.es/posts/direct/%d</guid>\n\t<description>%s</description>\n</item>\n", title, date, post, post, description);
+	if (hasimg)
+	{
+		snprintf(item, 8195, "<item>\n\t<title>%s</title>\n\t<pubDate>%s</pubDate>\n\t<author>%s</author>\n\t<link>https://danieljon.es/posts/direct/%d</link>\n\t<guid>https://danieljon.es/posts/direct/%d</guid>\n\t<description>%s\n<![CDATA[%s]]> </description>\n</item>\n", title, date, author_string, post, post, description, image);
+	}
+	else
+	{
+		snprintf(item, 8195, "<item>\n\t<title>%s</title>\n\t<pubDate>%s</pubDate>\n\t<author>%s</author>\n\t<link>https://danieljon.es/posts/direct/%d</link>\n\t<guid>https://danieljon.es/posts/direct/%d</guid>\n\t<description>%s</description>\n</item>\n", title, date, author_string, post, post, description);
+	}
 
 	fprintf(out, "%s", item);
 	fclose(in);
