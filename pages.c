@@ -872,7 +872,7 @@ writerss(FILE *out, int post)
 	//printf("title is: %s date is: %s: desc is: %s\n", title, date, description);
 	if (hasimg)
 	{
-		snprintf(item, 8195, "<item>\n\t<title>%s</title>\n\t<pubDate>%s</pubDate>\n\t<author>%s</author>\n\t<link>https://danieljon.es/posts/direct/%d</link>\n\t<guid>https://danieljon.es/posts/direct/%d</guid>\n\t<description>%s\n<br><![CDATA[%s]]> </description>\n</item>\n", title, date, author_string, post, post, description, image);
+		snprintf(item, 8195, "<item>\n\t<title>%s</title>\n\t<pubDate>%s</pubDate>\n\t<author>%s</author>\n\t<link>https://danieljon.es/posts/direct/%d</link>\n\t<guid>https://danieljon.es/posts/direct/%d</guid>\n\t<description>%s\n<![CDATA[<br>%s]]> </description>\n</item>\n", title, date, author_string, post, post, description, image);
 	}
 	else
 	{
