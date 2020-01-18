@@ -101,7 +101,7 @@ static const char 	*rss_output = "posts/posts.rss";
 static const char 	*rss_template = "rss.txt";
 static const int 	post_count = 10;
 static const char 	*base_url = "https://danieljon.es/posts/";
-static const char 	*author_string = "daniel@danieljon.es";
+static const char 	*author_string = "daniel@danieljon.es (Daniel Jones)";
 
 /* each page to be generated go into this array */
 static const struct page pages[] = {
