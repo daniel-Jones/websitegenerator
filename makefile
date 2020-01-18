@@ -5,7 +5,7 @@ CFLAGS = -std=c99 -g -Wall -Werror -Wno-unused-variable
 
 .PHONY: default all clean
 
-default: $(TARGET)
+default: mkdirs $(TARGET)
 all: default
 
 OBJECTS = $(patsubst %.c, %.o, $(wildcard *.c))
@@ -23,4 +23,7 @@ clean:
 	-rm -f *.o
 	-rm -f *.tmp
 	-rm -f $(TARGET)
+	-rm -rf output/
 
+mkdirs:
+	mkdir -p {output/posts/direct,output/opinions}
