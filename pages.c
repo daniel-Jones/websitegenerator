@@ -846,14 +846,11 @@ writerss(FILE *out, int post)
 			fclose(in);
 			return 0;
 		}
-		else if (pos == 3)
+		else if (pos >= 3)
 		{
 			strncpy(description, line, 100);
-		}
 
-		/* try to find images */
-		else if (pos > 3)
-		{
+			/* try to find images */
 			char *img;
 			if ((img = strstr(line, "<img")))
 			{
