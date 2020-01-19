@@ -907,7 +907,7 @@ generaterss(const int *posts, size_t totalposts)
 	int towrite = post_count;
 	while (towrite > totalposts)
 		towrite--;
-	for (i = 1; i < towrite; i++)
+	for (i = 1; i <= towrite; i++)
 	{
 		if (!writerss(tmp, (totalposts - posts[i])))
 			return 0;
