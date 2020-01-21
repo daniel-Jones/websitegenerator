@@ -463,6 +463,28 @@ postscompare(const void *a, const void *b)
 	return (*(int *)a - *(int *)b);
 }
 
+char
+*gettitle(char *file, char *title, size_t size)
+{
+	FILE *in = fopen(file, "r");
+	if (!in)
+	{
+		/* can't get title, use default */
+		fprintf(stderr, "Unable to get post title for %s\n", file);
+		strncpy(title, posts_title, size);
+		return title;
+	}
+	
+	char buff[size];
+	memset(buff, 0, size);
+	fgets(buff, size, in);
+	striphtml(buff, size);
+	strncpy(title, buff, size);
+	
+	fclose(in);
+	return title;
+}
+
 int
 createdirectpages(const int *posts, size_t totalposts)
 {
@@ -472,6 +494,7 @@ createdirectpages(const int *posts, size_t totalposts)
 
 	char file[512];
 	char source[512];
+	char title[1024];
 	for (int x = 1; x < totalposts; x++)
 	{
 		memset(source, 0, 1);
@@ -488,7 +511,10 @@ createdirectpages(const int *posts, size_t totalposts)
 			return 0;
 		}
 
-		if (!genericpage(NONE, file, source, posts_title, posts_info))
+		/* get post title */
+		gettitle(source, title, 1024);
+
+		if (!genericpage(NONE, file, source, title, posts_info))
 		{
 			fprintf(stderr, "unable to generate direct post page '%s', unrecoverable failure\n", file);
 			return 0;
