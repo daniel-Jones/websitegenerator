@@ -480,7 +480,12 @@ char
 	fgets(buff, size, in);
 	striphtml(buff, size);
 	strncpy(title, buff, size);
-	
+	size_t len = strlen(title)-1;
+	while ((title[len] == ' ') || (title[len] == '\t') || (title[len] == '\n'))
+	{
+		title[len] = '\0';
+		len = strlen(title)-1;
+	}
 	fclose(in);
 	return title;
 }
@@ -557,7 +562,7 @@ char
 }
 
 int
-writeposts(const int *posts, size_t totalposts, const char *outfile, int currentpage, int pagecount)
+writeposts(const int *posts, size_t totalposts, const char *outfile, int currentpage, int pagecount, int flags)
 {
 	/*
 	 * write posts into 'output_dir'/'outfile'
@@ -590,6 +595,19 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 		return 0;
 	}
 	fprintf(tmp, "%s\n", pagebar);
+	if (flags & PINNED && currentpage == 1)
+	{
+		char pinned[4096] = {0};
+		if (!generatepinned(pinned, 4096))
+		{
+			fprintf(stderr, "unable to generate pinned section\n");
+		}
+		else
+		{
+			fprintf(tmp, "%s\n", pinned);
+		}
+	}
+
 	for (int x = start; x < stop; x++)
 	{
 		/*
@@ -633,7 +651,30 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 }
 
 int
-generatepostpages(const int *posts, size_t totalposts, int pagecount)
+generatepinned(char *buff, size_t size)
+{
+	char title[64] = {0};
+	char file[512] = {0};
+	char outbuff[512] = {0};
+
+	strncat(buff, "\n<div class=\"pinned\">\nPinned posts:\n", 60);
+
+	// pray we fit
+	for (int i = 0; i < sizeof(pinned)/sizeof(pinned[0]); i++)
+	{
+		snprintf(file, 512, "%s/%d.txt", posts_content, pinned[i]);
+		gettitle(file, title, 64);
+		snprintf(outbuff, 512, "<br><a href=\"direct/%d.html\">%s</a>\n",pinned[i], title);
+		strncat(buff, outbuff, 512);
+	}
+
+
+	strncat(buff, "\n</div>\n<br><br><br>\n", 29);
+	return 1;
+}
+
+int
+generatepostpages(const int *posts, size_t totalposts, int pagecount, int flags)
 {
 	/*
 	 * create each blog page, there will be 'pagecount' of them
@@ -659,7 +700,7 @@ generatepostpages(const int *posts, size_t totalposts, int pagecount)
 			fprintf(stderr, "unable to create generic page '%s', unrecoverable failure\n", outfilename);
 			return 0;
 		}
-		if (!writeposts(posts, totalposts, outfilename, i, pagecount))
+		if (!writeposts(posts, totalposts, outfilename, i, pagecount, flags))
 		{
 			fprintf(stderr, "unable to create write posts to page %d', unrecoverable failure\n", i);
 			return 0;
@@ -725,7 +766,7 @@ postspage(int flags)
 
 	/* determine how many pages we need, if total posts divided by 'posts_per_page' isn't 0, we need 'posts_per_page'+1 pages */
 	int pagecount = (totalposts%posts_per_page == 0) ? totalposts/posts_per_page : totalposts/posts_per_page+1;
-	if (!generatepostpages(posts, totalposts, pagecount))
+	if (!generatepostpages(posts, totalposts, pagecount, flags))
 	{
 		fprintf(stderr, "unable to create post pages, unrecoverable failure\n");
 		return 0;
