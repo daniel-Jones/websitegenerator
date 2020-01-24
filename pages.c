@@ -657,7 +657,7 @@ generatepinned(char *buff, size_t size)
 	char file[512] = {0};
 	char outbuff[512] = {0};
 
-	strncat(buff, "\n<div class=\"pinned\">\nPinned posts:\n", 60);
+	strncat(buff, "<br><br>\n<div class=\"pinned\">\nPinned posts:\n", 60);
 
 	// pray we fit
 	for (int i = 0; i < sizeof(pinned)/sizeof(pinned[0]); i++)
