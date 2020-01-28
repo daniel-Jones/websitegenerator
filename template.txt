@@ -34,7 +34,7 @@ div.viewing{max-width: 70%; width: 100%; display: inline-block; margin: 10px;}
 div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-left: 15px; padding-bottom: 20px;}
 .content{}
 .pinned{margin-left: 10px; display: inline-block; border-width: 1px; width: auto; outline: 1px solid #000; outline-offset: 10px;}
-.notes{margin-left: 10px; display: inline-block; border-width: 1px; width: auto; outline: 1px solid #000; outline-offset: 10px; max-height: 100px; max-width: 500px; overflow-y:scroll;}
+.notes{margin-left: 10px; display: inline-block; border-width: 1px; width: auto; outline: 1px solid #000; outline-offset: 10px; max-height: 300px; max-width: 500px; overflow-y:scroll;}
 </style>
 </head>
 <body> 
