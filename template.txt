@@ -35,10 +35,19 @@ div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-
 .content{}
 .pinned{margin-left: 10px; display: inline-block; border-width: 1px; width: auto; outline: 1px solid #000; outline-offset: 10px;}
 .notes{margin-left: 10px; display: inline-block; border-width: 1px; width: auto; outline: 1px solid #000; outline-offset: 10px; max-height: 300px; max-width: 500px; overflow-y:scroll;}
+.js-message
+{
+	color: white;
+	background: red;
+}
+
 </style>
 </head>
 <body> 
 <div class="middle">
+<script>
+	document.write("<div class='js-message'>This site works best with JavaScript disabled, please disable it.</div>");
+</script>
 <h1>danieljon.es</h1>
 <a href="/">index</a> <a href="/posts">posts</a> <a href="/opinions">opinions</a> <a href="/like.html">likes</a> <a href="/dislike.html">dislikes</a> <a href="/interesting.html">interesting</a> <a href="https://git.danieljon.es">cgit</a> <a href="https://github.com/daniel-Jones/">github</a> <br>
 
