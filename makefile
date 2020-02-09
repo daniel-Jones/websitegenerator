@@ -1,7 +1,7 @@
 TARGET = generate
 LIBS = 
 CC = gcc
-CFLAGS = -std=c99 -g -Wall -Werror -Wno-unused-variable 
+CFLAGS = -std=c99 -g -Wall -Werror -Wno-unused-variable
 
 .PHONY: default all clean
 

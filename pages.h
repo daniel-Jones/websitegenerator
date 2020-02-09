@@ -48,8 +48,8 @@ char *generatepagebar(char *bar, size_t size, const int *posts, size_t totalpost
 int generatepostpages(const int *posts, size_t totalposts, int pagecount, int flags);
 int writeposts(const int *posts, size_t totalposts, const char *outfile, int currentpage, int pagecount, int flags);
 int generatepinned(char *buff, size_t size);
-int generaterss(const int *posts, size_t totalposts);
-int writerss(FILE *out, int post);
+int generaterss(const int *posts, size_t totalposts, int flags);
+int writerss(FILE *out, int post, int flags);
 char *striphtml(char *str, size_t size);
 char *rfc822date(char *date, size_t size);
 char *getimage(const char *line, char *buff, size_t size);

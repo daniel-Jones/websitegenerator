@@ -20,9 +20,10 @@
 
 enum flag
 {
-	NONE	= 0,
-	RSS	= 1,
-	PINNED	= 2,
+	NONE		= 1<<0,
+	RSS		= 1<<1,
+	RSSIMAGES 	= 1<<2,
+	PINNED		= 1<<3,
 };
 
 struct page
@@ -116,7 +117,7 @@ static const struct page pages[] = {
 	{opinions_animepage,		NONE},
 	{opinions_everythingpage,	NONE},
 	{portfoliopage,			NONE},
-	{postspage,			RSS|PINNED},	/* flags: RSS feed, pinned posts */
+	{postspage,			RSS|RSSIMAGES|PINNED},	/* flags: RSS feed, RSS images, pinned posts */
 };
 
 #endif

@@ -659,6 +659,7 @@ generatepinned(char *buff, size_t size)
 
 	strncat(buff, "<br><br>\n<div class=\"pinned\">\nPinned posts:\n", 60);
 
+	//TODO: check we fit into the buffer
 	// pray we fit
 	for (int i = 0; i < sizeof(pinned)/sizeof(pinned[0]); i++)
 	{
@@ -775,7 +776,7 @@ postspage(int flags)
 	/* generate rss feed if required */
 	if (flags & RSS)
 	{
-		generaterss(posts, totalposts);
+		generaterss(posts, totalposts, flags);
 	}
 	return 1;
 }
@@ -868,7 +869,7 @@ char
 }
 
 int
-writerss(FILE *out, int post)
+writerss(FILE *out, int post, int flags)
 {
 	/*
 	 * create rss item using 'post_content'/'posts'.txt into FILE 'out'
@@ -918,9 +919,9 @@ writerss(FILE *out, int post)
 			strncpy(description, line, 100);
 		}
 
-		/* try to find images */
+		/* try to find images if flag set */
 		char *img;
-		if ((img = strstr(line, "<img")))
+		if ((flags & RSSIMAGES) && (img = strstr(line, "<img")))
 		{
 			hasimg = 1;
 			getimage(img, image, 1024);
@@ -949,7 +950,7 @@ writerss(FILE *out, int post)
 }
 
 int
-generaterss(const int *posts, size_t totalposts)
+generaterss(const int *posts, size_t totalposts, int flags)
 {
 	/*
 	 * generate an rss feed for our blog/posts
@@ -976,7 +977,7 @@ generaterss(const int *posts, size_t totalposts)
 		towrite--;
 	for (i = 1; i <= towrite; i++)
 	{
-		if (!writerss(tmp, (totalposts - posts[i])))
+		if (!writerss(tmp, (totalposts - posts[i]), flags))
 			return 0;
 	}
 
