@@ -69,13 +69,13 @@ static const char 	*opinions_everything_content_output = "opinions/everything.ht
 static const char 	*likes_title = "Things I like";
 static const char 	*likes_info = "<h1>Things that I like</h1>These are my opinions.<br>I don't much care how you feel about them.<br><br>";
 static const char 	*likes_content = "content/like.txt";
-static const char 	*likes_content_output = "like.html";
+static const char 	*likes_content_output = "opinions/like.html";
 
 /* dislikes */
 static const char 	*dislikes_title = "Things I dislike";
 static const char 	*dislikes_info = "<h1>Things that I dislike</h1>These are my opinions.<br>I don't much care how you feel about them.<br><br>";
 static const char 	*dislikes_content = "content/dislike.txt";
-static const char 	*dislikes_content_output = "dislike.html";
+static const char 	*dislikes_content_output = "opinions/dislike.html";
 
 /* interesting */
 static const char 	*interesting_title = "Interesting";

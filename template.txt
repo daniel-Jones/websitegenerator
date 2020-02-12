@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-<meta name="keywords" content="Programming, C++, C, Blog">
-<meta name="description" content="Personal blog/portfolio/site for Daniel Jones">
-<meta name="author" content="Daniel Jones">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Cache-control" content="public">
-<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-<!--<link rel="icon" type="image/png" href="https://danieljon.es/favicon.png">-->
-<title>{TITLE}</title>
-<style>
+	<head>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta name="keywords" content="Programming, C++, C, Blog">
+		<meta name="description" content="Personal blog/portfolio/site for Daniel Jones">
+		<meta name="author" content="Daniel Jones">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="Cache-control" content="public">
+		<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+		<!--<link rel="icon" type="image/png" href="https://danieljon.es/favicon.png">-->
+		<title>{TITLE}</title>
+		<style>
 @font-face
 {
 	font-family: 'Agave-Regular';
@@ -41,25 +41,35 @@ div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-
 	background: red;
 }
 
-</style>
-</head>
-<body> 
-<div class="middle">
-<script>
-	document.write("<div class='js-message'>This site works best with JavaScript disabled, please disable it.</div>");
-</script>
-<h1>danieljon.es</h1>
-<a href="/">index</a> <a href="/posts">posts</a> <a href="/opinions">opinions</a> <a href="/like.html">likes</a> <a href="/dislike.html">dislikes</a> <a href="/interesting.html">interesting</a> <a href="https://git.danieljon.es">cgit</a> <a href="https://github.com/daniel-Jones/">github</a> <br>
+		</style>
+	</head>
+	<body>
+		<div class="middle">
+			<script>
+				document.write("<div class='js-message'>This site works best with JavaScript disabled, please disable it.</div>");
+			</script>
+			<h1><a href="/">danieljon.es</a></h1>
+			<table border="1" width="95%">
+				<tbody>
+					<tr>
+						<td><a href="/">Index</a></td>
+						<td><a href="/posts">posts</a></td>
+						<td><a href="/opinions">opinions</a></td>
+						<td> <a href="/portfolio.html">portfolio</a></td>
+					</tr>
+				</tbody>
+			</table>
 
-{INFO}
-</div>
-<div class="content">
-{CONTENT}
-</div>
-<!-- <br><br> <div class="middle"> <img src="https://danieljon.es/linuxfreak.png"> <br> <a id="gentag" href="https://gitlab.com/ubunchu-translators/ubunchu">source</a> </div> -->
-<br><br><div class="middle"> <a href="https://danieljon.es/posts/posts.rss"><img src="https://danieljon.es/media/rss.gif" alt="RSS feed"></a></div>
-<div class="middle"> <a href="https://www.fsf.org/"><img src="https://danieljon.es/media/fsf_member.png" alt="FSF member"></a></div>
-<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/websitegenerator/">websitegenerator in C</a></div>
-<a href="https://danieljon.es/cirno"><img src="https://danieljon.es/media/finger.png" style="z-index: -1; position: fixed; right: 0%; bottom: -0px; width: 15%; height: auto;"></a>
-</body>
+
+						{INFO}
+		</div>
+		<div class="content">
+			{CONTENT}
+		</div>
+		<!-- <br><br> <div class="middle"> <img src="https://danieljon.es/linuxfreak.png"> <br> <a id="gentag" href="https://gitlab.com/ubunchu-translators/ubunchu">source</a> </div> -->
+		<br><br><div class="middle"> <a href="https://danieljon.es/posts/posts.rss"><img src="https://danieljon.es/media/rss.gif" alt="RSS feed"></a></div>
+		<div class="middle"> <a href="https://www.fsf.org/"><img src="https://danieljon.es/media/fsf_member.png" alt="FSF member"></a></div>
+		<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/websitegenerator/">websitegenerator in C</a></div>
+		<a href="https://danieljon.es/cirno"><img src="https://danieljon.es/media/finger.png" style="z-index: -1; position: fixed; right: 0%; bottom: -0px; width: 15%; height: auto;"></a>
+	</body>
 </html>
