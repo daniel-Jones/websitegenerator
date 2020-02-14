@@ -52,7 +52,7 @@ div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-
 			<table border="1" width="50%" align="center">
 				<tbody>
 					<tr>
-						<td><a href="/">Index</a></td>
+						<td><a href="/">index</a></td>
 						<td><a href="/posts">posts</a></td>
 						<td><a href="/opinions">opinions</a></td>
 						<td> <a href="/portfolio.html">portfolio</a></td>
