@@ -49,7 +49,7 @@ div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-
 				document.write("<div class='js-message'>This site works best with JavaScript disabled, please disable it.</div>");
 			</script>
 			<h1><a href="/">danieljon.es</a></h1>
-			<table border="1" width="95%" align="center">
+			<table border="1" width="50%" align="center">
 				<tbody>
 					<tr>
 						<td><a href="/">Index</a></td>
