@@ -615,7 +615,22 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 		 * we do this because we want page 1 to contain the last blog posts not actually the first and so on
 		 */
 		post = totalposts - posts[x];
-		fprintf(tmp, "post #%d<br>\n<a href='direct/%d.html'>direct link</a><br>\n", post, post);
+		if (flags & GIRLNUMBERS)
+		{
+			char num[4] = {0}; /* will never have more than 999 posts */
+			snprintf(num, 4, "%d", post);
+			num[3] = '\0';
+			fprintf(tmp, "\n<a href='direct/%d.html'>", post);
+			for (int i = 0; i < strlen(num); i++)
+			{
+				fprintf(tmp, "<img height='70' src=\"%s/%s/%c%s\">", girlnumber_url, girlnumber_dir, num[i], girlnumber_extension);
+			}
+			fprintf(tmp, "</a>\n");
+		}
+		else
+		{
+			fprintf(tmp, "post #%d<br>\n<a href='direct/%d.html'>direct link</a><br>\n", post, post);
+		}
 		snprintf(source, 512, "%s%d.txt", posts_content, post);
 		postfile = fopen(source, "r");
 		if (!postfile)

@@ -24,6 +24,7 @@ enum flag
 	RSS		= 1<<1,
 	RSSIMAGES 	= 1<<2,
 	PINNED		= 1<<3,
+	GIRLNUMBERS	= 1<<4,
 };
 
 struct page
@@ -106,6 +107,11 @@ static const int 	post_count = 10;
 static const char 	*base_url = "https://danieljon.es/posts/";
 static const char 	*author_string = "daniel@danieljon.es (Daniel Jones)";
 
+/* girlnumbers for blog post count */
+static const char 	*girlnumber_url = "https://danieljon.es/";
+static const char 	*girlnumber_dir = "/media/numbers/";
+static const char 	*girlnumber_extension = ".gif";
+
 /* each page to be generated go into this array */
 static const struct page pages[] = {
 /*	function			flags 	*/
@@ -117,7 +123,7 @@ static const struct page pages[] = {
 	{opinions_animepage,		NONE},
 	{opinions_everythingpage,	NONE},
 	{portfoliopage,			NONE},
-	{postspage,			RSS|RSSIMAGES|PINNED},	/* flags: RSS feed, RSS images, pinned posts */
+	{postspage,			RSS|RSSIMAGES|PINNED|GIRLNUMBERS},	/* flags: RSS feed, RSS images, pinned posts, girl numbers */
 };
 
 #endif
