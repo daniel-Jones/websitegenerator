@@ -619,7 +619,7 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 		{
 			char num[4] = {0}; /* will never have more than 999 posts */
 			int girl_variant = 0;
-			int used[3];
+			int used[3] = {-1};
 			snprintf(num, 4, "%d", post);
 			num[3] = '\0';
 			fprintf(tmp, "\n<a href='direct/%d.html'>", post);
