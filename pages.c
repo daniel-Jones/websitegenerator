@@ -619,12 +619,13 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 		{
 			char num[4] = {0}; /* will never have more than 999 posts */
 			int girl_variant = 0;
-			int used[3] = {-1};
+			int used[3];
 			snprintf(num, 4, "%d", post);
 			num[3] = '\0';
 			fprintf(tmp, "\n<a href='direct/%d.html'>", post);
 			for (int i = 0; i < strlen(num); i++)
 			{
+				memset(used, -1, 3*sizeof(int));
 				girl_variant = rand() % 10;
 				while (girl_variant == used[0] || girl_variant == used[1] || girl_variant == used[2])
 				{
