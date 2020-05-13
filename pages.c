@@ -618,12 +618,21 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 		if (flags & GIRLNUMBERS)
 		{
 			char num[4] = {0}; /* will never have more than 999 posts */
+			int girl_variant = 0;
+			int used[3] = {-1};
 			snprintf(num, 4, "%d", post);
 			num[3] = '\0';
 			fprintf(tmp, "\n<a href='direct/%d.html'>", post);
 			for (int i = 0; i < strlen(num); i++)
 			{
-				fprintf(tmp, "<img height='70' src=\"%s/%s/%c%s\">", girlnumber_url, girlnumber_dir, num[i], girlnumber_extension);
+				girl_variant = rand() % 10;
+				while (girl_variant == used[0] || girl_variant == used[1] || girl_variant == used[2])
+				{
+					/* we don't want duplicate girls on the same line */
+					girl_variant = rand() % 10;
+				}
+				used[i] = girl_variant;
+				fprintf(tmp, "<img height='70' src=\"%s/%s/%c_%d%s\">", girlnumber_url, girlnumber_dir, num[i], girl_variant, girlnumber_extension);
 			}
 			fprintf(tmp, "</a>\n");
 		}

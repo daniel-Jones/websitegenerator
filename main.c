@@ -14,12 +14,15 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "config.h"
 #include "pages.h"
 
 int
 main(void)
 {
+	srand(time(NULL));
 	for (size_t i = 0; i < sizeof(pages)/sizeof(pages[0]); i++)
 	{
 		if (!pages[i].function(pages[i].flags))
