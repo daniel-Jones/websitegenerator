@@ -625,7 +625,6 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 			fprintf(tmp, "\n<a href='direct/%d.html'>", post);
 			for (int i = 0; i < strlen(num); i++)
 			{
-				memset(used, -1, 3*sizeof(int));
 				girl_variant = rand() % 10;
 				while (girl_variant == used[0] || girl_variant == used[1] || girl_variant == used[2])
 				{
