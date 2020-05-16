@@ -98,7 +98,7 @@ static const char 	*posts_output_dir = "posts/";
 static const char 	*direct_output_dir = "posts/direct/";
 static const int 	posts_per_page = 10;
 static const int 	ignore[] = {}; /* ignore these posts */
-static const int	pinned[] = {107,104}; /* pinned posts */
+static const int	pinned[] = {112, 107, 104}; /* pinned posts */
 
 /* rss */
 static const char 	*rss_output = "posts/posts.rss";
