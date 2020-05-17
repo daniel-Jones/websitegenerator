@@ -45,7 +45,7 @@ int
 createfile(const char *file, const char *template)
 {
 	/*
-	 * create file at location 'output_dir'/file' using the template 'template'
+	 * create file at location 'file' using the template 'template'
 	 * overwrite if it exists
 	 * assume the caller has put us in the base directory already
 	 */
@@ -96,7 +96,7 @@ long
 findstring(const char *file, const char *str)
 {
 	/*
-	 * find first occurance of substring 'str' in file 'output_dir'/'file'
+	 * find first occurance of substring 'str' in file 'file'
 	 * return offset of string beginning
 	 * -1 on error (including not found)
 	 *  
@@ -107,7 +107,7 @@ findstring(const char *file, const char *str)
 	long offset = -1;
 
 	char filename[512] = {0};
-	snprintf(filename, 512, "%s%s", output_dir, file);
+	snprintf(filename, 512, "%s", file);
 
 	FILE *in = fopen(filename, "r");
 	if (!in)
@@ -157,12 +157,12 @@ int
 deletebytes(const char *file, long offset, size_t bytes)
 {
 	/*
-	 * delete 'bytes' bytes from 'output_dir'/'file' starting at offset 'offset'
+	 * delete 'bytes' bytes from 'file' starting at offset 'offset'
 	 * return 1 on success. 0 on failure
 	 */
 
 	char filename[512] = {0};
-	snprintf(filename, 512, "%s%s", output_dir, file);
+	snprintf(filename, 512, "%s", file);
 
 	FILE *in = fopen(filename, "r");
 	if (!in)
@@ -225,7 +225,7 @@ writeatbyte(const char *dest, struct fileorstring *source, long offset)
 	 * return 1 on success. 0 on failure
 	 */
 	char filename[512] = {0};
-	snprintf(filename, 512, "%s%s", output_dir, dest);
+	snprintf(filename, 512, "%s", dest);
 
 	FILE *in = fopen(filename, "r");
 	if (!in)
@@ -334,19 +334,22 @@ replaceinpage(const char *outfile, const char *toreplace, struct fileorstring *s
 
 	long substrpos = -1;
 
-	substrpos = findstring(outfile, toreplace);
+	char out[512] = {0};
+	snprintf(out, 512, "%s/%s", output_dir, outfile);
+
+	substrpos = findstring(out, toreplace);
 
 	if (substrpos < 0)
 	{
 		return 0;
 	}
 
-	if (!deletebytes(outfile, substrpos, strlen(toreplace)))
+	if (!deletebytes(out, substrpos, strlen(toreplace)))
 	{
 		return 0;
 	}
 
-	if (!writeatbyte(outfile, source, substrpos))
+	if (!writeatbyte(out, source, substrpos))
 	{
 		return 0;
 	}
@@ -657,7 +660,16 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 		fclose(postfile);
 	}
 	fprintf(tmp, "%s\n", pagebar);
+
 	fclose(tmp);
+
+	if (flags & READMORETAG)
+	{
+		// TODO
+		//long readmorepos = findstring("post.tmp", read_more_tag);
+		//printf("got: %ld\n", readmorepos);
+	}
+
 	struct fileorstring replacement = {"post.tmp", NULL};
 	if (!replaceinpage(outfile, content_string, &replacement))
 	{

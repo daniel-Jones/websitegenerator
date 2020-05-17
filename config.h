@@ -25,6 +25,7 @@ enum flag
 	RSSIMAGES 	= 1<<2,
 	PINNED		= 1<<3,
 	GIRLNUMBERS	= 1<<4,
+	READMORETAG	= 1<<5,
 };
 
 struct page
@@ -99,6 +100,7 @@ static const char 	*direct_output_dir = "posts/direct/";
 static const int 	posts_per_page = 10;
 static const int 	ignore[] = {}; /* ignore these posts */
 static const int	pinned[] = {112, 107, 104}; /* pinned posts */
+static const char 	*read_more_tag = "[READMORE]";
 
 /* rss */
 static const char 	*rss_output = "posts/posts.rss";
@@ -123,7 +125,7 @@ static const struct page pages[] = {
 	{opinions_animepage,		NONE},
 	{opinions_everythingpage,	NONE},
 	{portfoliopage,			NONE},
-	{postspage,			RSS|RSSIMAGES|PINNED|GIRLNUMBERS},	/* flags: RSS feed, RSS images, pinned posts, girl numbers */
+	{postspage,			RSS|RSSIMAGES|PINNED|GIRLNUMBERS|READMORETAG},	/* flags: RSS feed, RSS images, pinned posts, girl numbers, read more tag */
 };
 
 #endif
