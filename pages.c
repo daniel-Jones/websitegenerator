@@ -647,7 +647,7 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 		postfile = fopen(source, "r");
 		if (!postfile)
 		{
-			fprintf(stderr, "unable to open temp file, unrecoverable failure\n");
+			fprintf(stderr, "unable to open %s, unrecoverable failure\n", source);
 			fclose(tmp);
 			return 0;
 		}
