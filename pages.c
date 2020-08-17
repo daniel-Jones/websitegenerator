@@ -24,7 +24,10 @@ makedirectories(const char *basedir, const char *file)
 	 * tokenise 'file' and make all directories leading to the final file inside 'basedir'
 	 */
 	// TODO: implement
+	(void)basedir;
+	(void)file;
 	char buffer[512];
+	(void)buffer;
 	struct stat sb = {0};
 
 	if(!(stat(output_dir, &sb) == 0) && !S_ISDIR(sb.st_mode))
@@ -154,7 +157,7 @@ findstring(const char *file, const char *str)
 }
 
 int
-deletebytes(const char *file, long offset, size_t bytes)
+deletebytes(const char *file, unsigned long offset, size_t bytes)
 {
 	/*
 	 * delete 'bytes' bytes from 'file' starting at offset 'offset'
@@ -181,7 +184,7 @@ deletebytes(const char *file, long offset, size_t bytes)
 		return 0;
 	}
 
-	long curpos = 1;
+	unsigned long curpos = 1;
 	char c;
 	/* read bytes from 'in' and write them to 'out', skipping 'bytes' bytes starting at 'offset' */
 	while ((c = fgetc(in)) != EOF)
@@ -386,6 +389,7 @@ createtmpfile(const char *name, const char *content, size_t size)
 int
 genericpage(int flags, const char *output, const char *ind, const char *tit, const char *inf)
 {
+	(void)flags;
 	if (!createfile(output, template_file))
 	{
 		fprintf(stderr, "unable to generate genericpage\n");
@@ -503,7 +507,7 @@ createdirectpages(const int *posts, size_t totalposts)
 	char file[512];
 	char source[512];
 	char title[1024];
-	for (int x = 1; x < totalposts; x++)
+	for (size_t x = 1; x < totalposts; x++)
 	{
 		memset(source, 0, 1);
 		memset(file, 0, 1);
@@ -538,8 +542,9 @@ char
 	 * create a navigation bar for the posts pages highlighting the 'currentpage' link
 	 * store it in bar and return it, NULL on error
 	 */
+	(void)posts;
+	(void)totalposts;
 	char buff[size];
-	int i;
 	size_t freespace = size;
 	/* gross hack, sxprintf returns the number of chars written, keep track of our freespace */
 	freespace -= snprintf(buff, freespace, "<div class='middle'> <a href='%d'>prev</a> ", (currentpage == 1) ? pagecount : currentpage-1);
@@ -581,7 +586,7 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 	}
 
 	int start;
-	int stop;
+	size_t stop;
 	start = 1 + (posts_per_page * currentpage) - posts_per_page;
 	stop = start + posts_per_page;
 	while (stop > (totalposts))
@@ -611,7 +616,7 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 		}
 	}
 
-	for (int x = start; x < stop; x++)
+	for (size_t x = start; x < stop; x++)
 	{
 		/*
 		 * post is the index into posts[] we actually want
@@ -626,7 +631,7 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 			snprintf(num, 4, "%d", post);
 			num[3] = '\0';
 			fprintf(tmp, "\n<a href='direct/%d.html'>", post);
-			for (int i = 0; i < strlen(num); i++)
+			for (unsigned long i = 0; i < strlen(num); i++)
 			{
 				girl_variant = rand() % 10;
 				while (girl_variant == used[0] || girl_variant == used[1] || girl_variant == used[2])
@@ -689,6 +694,7 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 int
 generatepinned(char *buff, size_t size)
 {
+	(void)size;
 	char title[64] = {0};
 	char file[512] = {0};
 	char outbuff[512] = {0};
@@ -697,7 +703,7 @@ generatepinned(char *buff, size_t size)
 
 	//TODO: check we fit into the buffer
 	// pray we fit
-	for (int i = 0; i < sizeof(pinned)/sizeof(pinned[0]); i++)
+	for (unsigned long i = 0; i < sizeof(pinned)/sizeof(pinned[0]); i++)
 	{
 		snprintf(file, 512, "%s/%d.txt", posts_content, pinned[i]);
 		gettitle(file, title, 64);
@@ -720,7 +726,6 @@ generatepostpages(const int *posts, size_t totalposts, int pagecount, int flags)
 	 */
 
 	char outfilename[512] = {0};
-	int postswritten = 0;
 
 	for (int i = 1; i <= pagecount; i++)
 	{
@@ -869,7 +874,7 @@ char
 char
 *getimage(const char *line, char *buff, size_t size)
 {
-	long pos = 0;
+	size_t pos = 0;
 	size_t linesize = strlen(line);
 	while (((line[pos] != '>') && (line[pos] != '\0'))
 				   && pos < linesize
@@ -1007,8 +1012,8 @@ generaterss(const int *posts, size_t totalposts, int flags)
 	}
 
 	/* loop through each post and write an rss file to our open file */
-	int i;
-	int towrite = post_count;
+	unsigned long i;
+	unsigned long towrite = post_count;
 	while (towrite > totalposts)
 		towrite--;
 	for (i = 1; i <= towrite; i++)

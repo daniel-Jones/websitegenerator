@@ -35,7 +35,7 @@ struct fileorstring
 /* helpers */
 int createfile(const char *file, const char *template);
 long findstring(const char *file, const char *str);
-int deletebytes(const char *file, long offset, size_t bytes);
+int deletebytes(const char *file, unsigned long offset, size_t bytes);
 int writeatbyte(const char *dest, struct fileorstring *source, long offset);
 int replaceinpage(const char *outfile, const char *toreplace, struct fileorstring *source);
 char *gettime(char *buffer, size_t size);
