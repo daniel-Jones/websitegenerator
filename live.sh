@@ -1,3 +1,4 @@
+cd content
 git pull
 cd ..
 git pull
