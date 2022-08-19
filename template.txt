@@ -22,7 +22,7 @@
 	url(/media/fontsassets/Agave-Regular.svg#Agave-Regular) format('svg');
 }
 
-body{font-family: "Agave-Regular"; /*background: black; color: #999;*/}
+body{font-family: "Agave-Regular"; background: #F7F0FF; /*color: #999;*/}
 img{max-width: 100%; max-height: 100%; overflow: hidden;}
 pre{overflow: auto; border-width: 1px; border-style: solid; border-color: black; /*background-color: #333339; color: #fff;*/}
 .middle{text-align: center;}
