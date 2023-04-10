@@ -21,20 +21,35 @@
 	url(/media/fonts/Agave-Regular.ttf) format('truetype'),
 	url(/media/fontsassets/Agave-Regular.svg#Agave-Regular) format('svg');
 }
+@font-face {
+	  font-family: "Px437_Verite_8x8-2y";
+	    src: url('Px437_Verite_8x8-2y.woff2');
+}
 
-body{font-family: "Agave-Regular"; background: #F7F0FF; /*color: #999;*/}
+body{font-family: 'Px437_Verite_8x8-2y', monospace !important; background: #F7F0FF; /*color: #999;*/}
+body
+{
+	color: white;
+	background-color: #281b38;
+  	background-image: url('/media/bg.gif');
+}
+
 img{max-width: 100%; max-height: 100%; overflow: hidden;}
-pre{overflow: auto; border-width: 1px; border-style: solid; border-color: black; /*background-color: #333339; color: #fff;*/}
+pre{overflow: auto; border-width: 1px; border-style: solid; border-color: white; /*background-color: #333339; color: #fff;*/}
 .middle{text-align: center;}
 .middiv{margin: auto; width: 80%;}
 #gentag{text-align: center; font-size: 75%;}
 h1,h2,h3,h4{font-family: "Agave-Regular"; padding-left: 5px; /*color: #eee;*/}
-hr{border-color: black;}
+hr{border-color: white;}
 div.viewing{max-width: 70%; width: 100%; display: inline-block; margin: 10px;}
 div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-left: 15px; padding-bottom: 20px;}
 .content{max-width: 75%; margin: auto;}
 .pinned{margin-left: 10px; display: inline-block; border-width: 1px; width: auto; outline: 1px solid #000; outline-offset: 10px;}
 .notes{margin-left: 10px; display: inline-block; border-width: 1px; width: auto; outline: 1px solid #000; outline-offset: 10px; max-height: 300px; max-width: 500px; overflow-y:scroll; /*background-color: #333339; color: #fff;*/}
+a {
+	  color: #c625ef;
+	    text-decoration: none;
+}
 .js-message
 {
 	color: white;
@@ -69,6 +84,6 @@ div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-
 		<br><br><div class="middle"> <a href="https://danieljon.es/posts/posts.rss"><img src="https://danieljon.es/media/rss.gif" alt="RSS feed"></a></div>
 		<div class="middle"> <a href="https://www.fsf.org/"><img src="https://danieljon.es/media/fsf_member.png" alt="FSF member"></a></div>
 		<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/websitegenerator/">websitegenerator in C</a></div>
-		<a href="https://gnupluslinux.com/anime/escalator.webm"><img src="https://danieljon.es/media/finger.png" style="z-index: -1; position: fixed; right: 0%; bottom: -0px; width: 15%; height: auto;"></a>
+		<a href="https://gnupluslinux.com/anime/escalator.webm"><img src="https://danieljon.es/media/finger.png" style="z-index: -1; position: fixed; right: 0%; bottom: -0px; width: 8%; height: auto;"></a>
 	</body>
 </html>
