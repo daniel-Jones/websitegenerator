@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
+<head>
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 		<meta name="keywords" content="Programming, C++, C, Blog">
 		<meta name="description" content="Personal blog/portfolio/site for Daniel Jones">
@@ -84,6 +82,6 @@ a {
 		<br><br><div class="middle"> <a href="https://danieljon.es/posts/posts.rss"><img src="https://danieljon.es/media/rss.gif" alt="RSS feed"></a></div>
 		<div class="middle"> <a href="https://www.fsf.org/"><img src="https://danieljon.es/media/fsf_member.png" alt="FSF member"></a></div>
 		<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/websitegenerator/">websitegenerator in C</a></div>
-		<a href="https://gnupluslinux.com/anime/escalator.webm"><img src="https://danieljon.es/media/finger.png" style="z-index: -1; position: fixed; right: 0%; bottom: -0px; width: 8%; height: auto;"></a>
+		<a href="https://gnupluslinux.com/anime/escalator.webm"><img src="https://danieljon.es/media/finger.png" style="z-index: -1; position: fixed; right: 0%; bottom: -0px; width: 15%; height: auto;"></a>
 	</body>
 </html>
