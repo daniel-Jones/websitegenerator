@@ -53,6 +53,7 @@ a {
 	color: white;
 	background: red;
 }
+td {text-align: center;}
 /*a{color: #eee;}*/
 
 		</style>
