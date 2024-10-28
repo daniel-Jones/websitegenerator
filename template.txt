@@ -49,18 +49,29 @@ div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-
 	background-repeat: repeat;
 	background-size: auto 100%;
 	animation: scroll-bg 15s linear infinite;
-	position: relative;  /* This makes the div the positioning context */
-	width: 50%;         /* Match the original table width */
-	margin: auto;       /* Center the div */
+	position: relative;
+	width: 50%;
+	margin: 0 auto;
+	min-width: 300px;
+	max-width: 100%;
 }
+
 @keyframes scroll-bg {
-	from {
-		background-position: 100% 0;
+	0% {
+		background-position-x: 100%;
 	}
-	to {
-		background-position: 0 0;
+	100% {
+		background-position-x: 0%;
 	}
 }
+
+/* Media query for small screens */
+@media screen and (max-width: 600px) {
+	#links {
+		width: 95%;
+	}
+}
+
 a {
 	  color: #c625ef;
 	    text-decoration: none;
@@ -198,6 +209,25 @@ table {
     z-index: 1;
     background: transparent;
 }
+
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;  /* space between elements */
+}
+
+.title-gif {
+    width: 100px;
+    height: 100px;
+    background-image: url('https://danieljones.au/media/tux_dance.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.title-gif.right {
+    transform: scaleX(-1);  /* flip the right gif */
+}
 </style>
 </head>
 <body>
@@ -207,7 +237,11 @@ table {
 				document.write("<div class='walker-left'></div>");
 				document.write("<div class='walker-right'></div>");
 			</script>-->
-			<h1><a href="/">Daniel's Homepage</a></h1>
+			<h1 class="title-container">
+				<div class="title-gif"></div>
+				<a href="/">daniels homepage</a>
+				<div class="title-gif right"></div>
+			</h1>
 			<div id="links">
 				<div class="running-sprite"></div>
 				<table border="1" width="100%" align="center">
@@ -231,6 +265,7 @@ table {
 		<div class="middle"> <a href="https://www.fsf.org/"><img src="https://danieljon.es/media/fsf_member.png" alt="FSF member"></a></div>
 		<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/websitegenerator/">websitegenerator in C</a></div>
 		<a href="https://gnupluslinux.com/anime/escalator.webm"><img src="https://danieljones.au/media/tux_rotate.gif" style="z-index: -1; position: fixed; right: 0%; bottom: -0px; width: 15%; height: auto;"></a>
+		<a href="https://gnupluslinux.com/anime/escalator.webm"><img src="https://danieljones.au/media/i_love_you.gif" style="z-index: -1; position: fixed; left: 0%; bottom: -0px; width: 100px; height: auto;"></a>
 		<div class="walker-left"></div>
 		<div class="walker-right"></div>
 		<div class="walker"></div>
