@@ -29,7 +29,7 @@ body
 {
 	color: white;
 	background-color: #281b38;
-  	background-image: url('/media/bg.gif');
+  	background-image: url('https://danieljones.au/media/bg.gif');
 }
 
 img{max-width: 100%; max-height: 100%; overflow: hidden;}
@@ -44,6 +44,23 @@ div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-
 .content{max-width: 75%; margin: auto;}
 .pinned{margin-left: 10px; display: inline-block; border-width: 1px; width: auto; outline: 1px solid #000; outline-offset: 10px;}
 .notes{margin-left: 10px; display: inline-block; border-width: 1px; width: auto; outline: 1px solid #000; outline-offset: 10px; max-height: 300px; max-width: 500px; overflow-y:scroll; /*background-color: #333339; color: #fff;*/}
+#links {
+	background-image: url('https://danieljones.au/media/rainbow.jpg');
+	background-repeat: repeat;
+	background-size: auto 100%;
+	animation: scroll-bg 15s linear infinite;
+	position: relative;  /* This makes the div the positioning context */
+	width: 50%;         /* Match the original table width */
+	margin: auto;       /* Center the div */
+}
+@keyframes scroll-bg {
+	from {
+		background-position: 100% 0;
+	}
+	to {
+		background-position: 0 0;
+	}
+}
 a {
 	  color: #c625ef;
 	    text-decoration: none;
@@ -56,25 +73,155 @@ a {
 td {text-align: center;}
 /*a{color: #eee;}*/
 
-		</style>
-	</head>
-	<body>
+#links a {
+    padding: 2px 8px;
+    color: #281b38;
+    text-shadow: 
+        -1px -1px 0 white,
+        1px -1px 0 white,
+        -1px 1px 0 white,
+        1px 1px 0 white;
+    transition: all 0.2s;
+}
+
+#links a:hover {
+    color: white;
+    text-shadow: 
+        -1px -1px 0 #281b38,
+        1px -1px 0 #281b38,
+        -1px 1px 0 #281b38,
+        1px 1px 0 #281b38;
+}
+
+.running-sprite {
+    position: absolute;
+    top: -61px;         /* Adjust this value to align with the top border */
+    left: 0;
+    width: 49px;        /* Adjust based on your sprite's actual size */
+    height: 61px;       /* Adjust based on your sprite's actual size */
+    background-image: url('https://danieljones.au/media/running_girl.gif');
+    animation: run-sprite 8s linear infinite;
+    transform: scaleX(1);
+    z-index: 1;
+}
+
+@keyframes run-sprite {
+    0% {
+        left: 0;
+        transform: scaleX(1);
+    }
+    45% {
+        left: calc(100% - 32px);  /* Adjust based on sprite width */
+        transform: scaleX(1);
+    }
+    50% {
+        left: calc(100% - 32px);
+        transform: scaleX(-1);
+    }
+    95% {
+        left: 0;
+        transform: scaleX(-1);
+    }
+    100% {
+        left: 0;
+        transform: scaleX(1);
+    }
+}
+
+table {
+    position: relative;  /* Ensure the table's position is a reference point */
+    z-index: 0;         /* Place table behind the sprite */
+}
+
+.walker-left, .walker-right {
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    background-image: url('https://danieljones.au/media/chiyo_walk.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+}
+
+.walker-left {
+    animation: walk-left 6s linear infinite;
+    transform: scaleX(1);
+}
+
+.walker-right {
+    animation: walk-right 6s linear infinite;
+    transform: scaleX(-1);
+    animation-delay: 3s;
+}
+
+@keyframes walk-left {
+    0% {
+        left: 60%;
+        bottom: 0;
+        transform: scaleX(1) scale(0.2);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        left: 20%;
+        bottom: 70%;
+        transform: scaleX(1) scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes walk-right {
+    0% {
+        left: 40%;
+        bottom: 0;
+        transform: scaleX(-1) scale(0.2);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        left: 80%;
+        bottom: 70%;
+        transform: scaleX(-1) scale(2);
+        opacity: 0;
+    }
+}
+
+/* Ensure main content stays above walkers */
+.middle {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+}
+</style>
+</head>
+<body>
 		<div class="middle">
 			<!--<script>
 				document.write("<div class='js-message'>This site works best with JavaScript disabled, please disable it.</div>");
+				document.write("<div class='walker-left'></div>");
+				document.write("<div class='walker-right'></div>");
 			</script>-->
-			<h1><a href="/">danieljon.es</a></h1>
-			<table border="1" width="50%" align="center">
-				<tbody>
-					<tr>
-						<td><a href="/">index</a></td>
-						<td><a href="/posts">posts</a></td>
-						<td><a href="/opinions">opinions</a></td>
-						<td> <a href="/portfolio.html">portfolio</a></td>
-					</tr>
-				</tbody>
-			</table>
-						{INFO}
+			<h1><a href="/">Daniel's Homepage</a></h1>
+			<div id="links">
+				<div class="running-sprite"></div>
+				<table border="1" width="100%" align="center">
+					<tbody>
+						<tr>
+							<td><a href="/">index</a></td>
+							<td><a href="/posts">posts</a></td>
+							<td><a href="/opinions">opinions</a></td>
+							<td><a href="/portfolio.html">portfolio</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			{INFO}
 		</div>
 		<div class="content">
 			{CONTENT}
@@ -83,6 +230,9 @@ td {text-align: center;}
 		<br><br><div class="middle"> <a href="https://danieljon.es/posts/posts.rss"><img src="https://danieljon.es/media/rss.gif" alt="RSS feed"></a></div>
 		<div class="middle"> <a href="https://www.fsf.org/"><img src="https://danieljon.es/media/fsf_member.png" alt="FSF member"></a></div>
 		<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/websitegenerator/">websitegenerator in C</a></div>
-		<a href="https://gnupluslinux.com/anime/escalator.webm"><img src="https://danieljon.es/media/finger.png" style="z-index: -1; position: fixed; right: 0%; bottom: -0px; width: 15%; height: auto;"></a>
+		<a href="https://gnupluslinux.com/anime/escalator.webm"><img src="https://danieljones.au/media/tux_rotate.gif" style="z-index: -1; position: fixed; right: 0%; bottom: -0px; width: 15%; height: auto;"></a>
+		<div class="walker-left"></div>
+		<div class="walker-right"></div>
+		<div class="walker"></div>
 	</body>
 </html>
