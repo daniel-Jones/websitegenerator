@@ -1,35 +1,35 @@
 <head>
-		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-		<meta name="keywords" content="Programming, C++, C, Blog">
-		<meta name="description" content="Personal blog/portfolio/site for Daniel Jones">
-		<meta name="author" content="Daniel Jones">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="Cache-control" content="public">
-		<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-		<!--<link rel="icon" type="image/png" href="https://danieljon.es/favicon.png">-->
-		<title>{TITLE}</title>
-		<style>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta name="keywords" content="Programming, C++, C, Blog">
+	<meta name="description" content="Personal blog/portfolio/site for Daniel Jones">
+	<meta name="author" content="Daniel Jones">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-control" content="public">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+	<!--<link rel="icon" type="image/png" href="https://danieljon.es/favicon.png">-->
+	<title>{TITLE}</title>
+	<style>
 @font-face
 {
-	font-family: 'Agave-Regular';
-	src: url(/media/fonts/Agave-Regular.eot);
-	src: url(/media/fonts/Agave-Regular.eot?#iefix) format('embedded-opentype'),
-	url(/media/fonts/Agave-Regular.woff2) format('woff2'),
-	url(/media/fonts/Agave-Regular.woff) format('woff'),
-	url(/media/fonts/Agave-Regular.ttf) format('truetype'),
-	url(/media/fontsassets/Agave-Regular.svg#Agave-Regular) format('svg');
+font-family: 'Agave-Regular';
+src: url(/media/fonts/Agave-Regular.eot);
+src: url(/media/fonts/Agave-Regular.eot?#iefix) format('embedded-opentype'),
+url(/media/fonts/Agave-Regular.woff2) format('woff2'),
+url(/media/fonts/Agave-Regular.woff) format('woff'),
+url(/media/fonts/Agave-Regular.ttf) format('truetype'),
+url(/media/fontsassets/Agave-Regular.svg#Agave-Regular) format('svg');
 }
 @font-face {
-	  font-family: "Px437_Verite_8x8-2y";
-	    src: url('Px437_Verite_8x8-2y.woff2');
+  font-family: "Px437_Verite_8x8-2y";
+	src: url('Px437_Verite_8x8-2y.woff2');
 }
 
 body{font-family: 'Px437_Verite_8x8-2y', monospace !important; background: #F7F0FF; /*color: #999;*/}
 body
 {
-	color: white;
-	background-color: #281b38;
-  	background-image: url('https://danieljones.au/media/bg.gif');
+color: white;
+background-color: #281b38;
+  background-image: url('https://danieljones.au/media/bg.gif');
 }
 
 img{max-width: 100%; max-height: 100%; overflow: hidden;}
@@ -43,278 +43,298 @@ div.viewing{max-width: 70%; width: 100%; display: inline-block; margin: 10px;}
 div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-left: 15px; padding-bottom: 20px;}
 .content{max-width: 75%; margin: auto;}
 .pinned{margin-left: 10px; display: inline-block; border-width: 1px; width: auto; outline: 1px solid #000; outline-offset: 10px;}
-.notes{margin-left: 10px; display: inline-block; border-width: 1px; width: auto; outline: 1px solid #000; outline-offset: 10px; max-height: 300px; max-width: 500px; overflow-y:scroll; /*background-color: #333339; color: #fff;*/}
+.notes {
+margin-left: 10px;
+display: inline-block;
+width: auto;
+max-height: 300px;
+max-width: 500px;
+overflow-y: scroll !important;
+scrollbar-width: auto;
+border: 15px solid;
+border-image: url('https://danieljones.au/media/div_border.gif') 40 stretch;
+padding: 1px;
+box-sizing: border-box;
+height: auto;
+}
+
+
 #links {
-	background-image: url('https://danieljones.au/media/rainbow.jpg');
-	background-repeat: repeat;
-	background-size: auto 100%;
-	animation: scroll-bg 15s linear infinite;
-	position: relative;
-	width: 50%;
-	margin: 0 auto;
-	min-width: 300px;
-	max-width: 100%;
+background-image: url('https://danieljones.au/media/rainbow.jpg');
+background-repeat: repeat;
+background-size: auto 100%;
+animation: scroll-bg 15s linear infinite;
+position: relative;
+width: 50%;
+margin: 0 auto;
+min-width: 300px;
+max-width: 100%;
 }
 
 @keyframes scroll-bg {
-	0% {
-		background-position-x: 100%;
-	}
-	100% {
-		background-position-x: 0%;
-	}
+0% {
+	background-position-x: 100%;
+}
+100% {
+	background-position-x: 0%;
+}
 }
 
 /* Media query for small screens */
 @media screen and (max-width: 600px) {
-	#links {
-		width: 95%;
-	}
+#links {
+	width: 95%;
+}
 }
 
 a {
-	  color: #c625ef;
-	    text-decoration: none;
+  color: #c625ef;
+	text-decoration: none;
 }
 .js-message
 {
-	color: white;
-	background: red;
+color: white;
+background: red;
 }
 td {text-align: center;}
 /*a{color: #eee;}*/
 
 #links a {
-    padding: 2px 8px;
-    color: #281b38;
-    text-shadow: 
-        -1px -1px 0 white,
-        1px -1px 0 white,
-        -1px 1px 0 white,
-        1px 1px 0 white;
-    transition: all 0.2s;
+padding: 2px 8px;
+color: #281b38;
+text-shadow: 
+	-1px -1px 0 white,
+	1px -1px 0 white,
+	-1px 1px 0 white,
+	1px 1px 0 white;
+transition: all 0.2s;
 }
 
 #links a:hover {
-    color: white;
-    text-shadow: 
-        -1px -1px 0 #281b38,
-        1px -1px 0 #281b38,
-        -1px 1px 0 #281b38,
-        1px 1px 0 #281b38;
+color: white;
+text-shadow: 
+	-1px -1px 0 #281b38,
+	1px -1px 0 #281b38,
+	-1px 1px 0 #281b38,
+	1px 1px 0 #281b38;
 }
 
 .running-sprite {
-    position: absolute;
-    top: -61px;         /* Adjust this value to align with the top border */
-    left: 0;
-    width: 49px;        /* Adjust based on your sprite's actual size */
-    height: 61px;       /* Adjust based on your sprite's actual size */
-    background-image: url('https://danieljones.au/media/running_girl.gif');
-    animation: run-sprite 8s linear infinite;
-    transform: scaleX(1);
-    z-index: 1;
+position: absolute;
+top: -61px;         /* Adjust this value to align with the top border */
+left: 0;
+width: 49px;        /* Adjust based on your sprite's actual size */
+height: 61px;       /* Adjust based on your sprite's actual size */
+background-image: url('https://danieljones.au/media/running_girl.gif');
+animation: run-sprite 8s linear infinite;
+transform: scaleX(1);
+z-index: 1;
 }
 .running-sprite2 {
-    position: fixed;
-    bottom: 5px;
-    left: 0;
-    width: 60px;        /* Adjust based on your sprite's actual size */
-    height: 60px;       /* Adjust based on your sprite's actual size */
-    background-image: url('https://danieljones.au/media/rem_run.gif');
-	background-size: cover;
-    animation: run-sprite 15s linear infinite;
-    transform: scaleX(1);
-    z-index: 1;
+position: fixed;
+bottom: 5px;
+left: 0;
+width: 60px;        /* Adjust based on your sprite's actual size */
+height: 60px;       /* Adjust based on your sprite's actual size */
+background-image: url('https://danieljones.au/media/rem_run.gif');
+background-size: cover;
+animation: run-sprite 15s linear infinite;
+transform: scaleX(1);
+z-index: 1;
 }
 
 @keyframes run-sprite {
-    0% {
-        left: 0;
-        transform: scaleX(1);
-    }
-    45% {
-        left: calc(100% - 32px);  /* Adjust based on sprite width */
-        transform: scaleX(1);
-    }
-    50% {
-        left: calc(100% - 32px);
-        transform: scaleX(-1);
-    }
-    95% {
-        left: 0;
-        transform: scaleX(-1);
-    }
-    100% {
-        left: 0;
-        transform: scaleX(1);
-    }
+0% {
+	left: 0;
+	transform: scaleX(1);
+}
+45% {
+	left: calc(100% - 32px);  /* Adjust based on sprite width */
+	transform: scaleX(1);
+}
+50% {
+	left: calc(100% - 32px);
+	transform: scaleX(-1);
+}
+95% {
+	left: 0;
+	transform: scaleX(-1);
+}
+100% {
+	left: 0;
+	transform: scaleX(1);
+}
 }
 
 table {
-    position: relative;  /* Ensure the table's position is a reference point */
-    z-index: 0;         /* Place table behind the sprite */
+position: relative;  /* Ensure the table's position is a reference point */
+z-index: 0;         /* Place table behind the sprite */
 }
 
 .walker-left, .walker-right {
-    position: fixed;
-    width: 200px;
-    height: 200px;
-    background-image: url('https://danieljones.au/media/chiyo_walk.gif');
-    background-size: contain;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    z-index: -1;
-    opacity: 0;
+position: fixed;
+width: 200px;
+height: 200px;
+background-image: url('https://danieljones.au/media/chiyo_walk.gif');
+background-size: contain;
+background-repeat: no-repeat;
+pointer-events: none;
+z-index: -1;
+opacity: 0;
 }
 
 .walker-left {
-    animation: walk-left 6s linear infinite;
-    transform: scaleX(1);
+animation: walk-left 6s linear infinite;
+transform: scaleX(1);
 }
 
 .walker-right {
-    animation: walk-right 6s linear infinite;
-    transform: scaleX(-1);
-    animation-delay: 3s;
+animation: walk-right 6s linear infinite;
+transform: scaleX(-1);
+animation-delay: 3s;
 }
 
 @keyframes walk-left {
-    0% {
-        left: 60%;
-        bottom: 0;
-        transform: scaleX(1) scale(0.2);
-        opacity: 0;
-    }
-    20% {
-        opacity: 1;
-    }
-    100% {
-        left: 20%;
-        bottom: 70%;
-        transform: scaleX(1) scale(2);
-        opacity: 0;
-    }
+0% {
+	left: 60%;
+	bottom: 0;
+	transform: scaleX(1) scale(0.2);
+	opacity: 0;
+}
+20% {
+	opacity: 1;
+}
+100% {
+	left: 20%;
+	bottom: 70%;
+	transform: scaleX(1) scale(2);
+	opacity: 0;
+}
 }
 
 @keyframes walk-right {
-    0% {
-        left: 40%;
-        bottom: 0;
-        transform: scaleX(-1) scale(0.2);
-        opacity: 0;
-    }
-    20% {
-        opacity: 1;
-    }
-    100% {
-        left: 80%;
-        bottom: 70%;
-        transform: scaleX(-1) scale(2);
-        opacity: 0;
-    }
+0% {
+	left: 40%;
+	bottom: 0;
+	transform: scaleX(-1) scale(0.2);
+	opacity: 0;
+}
+20% {
+	opacity: 1;
+}
+100% {
+	left: 80%;
+	bottom: 70%;
+	transform: scaleX(-1) scale(2);
+	opacity: 0;
+}
 }
 
 /* Ensure main content stays above walkers */
 .middle {
-    position: relative;
-    z-index: 1;
-    background: transparent;
+position: relative;
+z-index: 1;
+background: transparent;
 }
 
 .title-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    height: 32px;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+height: 32px;
 }
 
 .title-gif {
-    width: 100px;
-    height: 100px;
-    background-image: url('https://danieljones.au/media/tux_dance.gif');
-    background-size: contain;
-    background-repeat: no-repeat;
-    display: inline-block;
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7))
-           drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))
-           drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
-    animation: glow 2s ease-in-out infinite alternate;
+width: 100px;
+height: 100px;
+background-image: url('https://danieljones.au/media/tux_dance.gif');
+background-size: contain;
+background-repeat: no-repeat;
+display: inline-block;
+filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7))
+	   drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))
+	   drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+animation: glow 2s ease-in-out infinite alternate;
 }
 
 .title-gif.right {
-    transform: scaleX(-1);
+transform: scaleX(-1);
 }
 
 @keyframes glow {
-    from {
-        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7))
-               drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))
-               drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
-    }
-    to {
-        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9))
-               drop-shadow(0 0 15px rgba(255, 255, 255, 0.7))
-               drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
-    }
+from {
+	filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7))
+		   drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))
+		   drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+}
+to {
+	filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9))
+		   drop-shadow(0 0 15px rgba(255, 255, 255, 0.7))
+		   drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+}
 }
 </style>
 </head>
 <body>
-		<div class="middle">
-			<!--<script>
-				document.write("<div class='js-message'>This site works best with JavaScript disabled, please disable it.</div>");
-				document.write("<div class='walker-left'></div>");
-				document.write("<div class='walker-right'></div>");
-			</script>-->
-			<h1 class="title-container">
-				<div class="title-gif"></div>
-				<font color="green"><b>></b></font><a href="/">Daniel's Homepage</a>
-				<div class="title-gif right"></div>
-			</h1>
-			<div id="links">
-				<div class="running-sprite"></div>
-				
-				<table border="1" width="100%" align="center">
-					<tbody>
-						<tr>
-							<td><a href="/">index</a></td>
-							<td><a href="/posts">posts</a></td>
-							<td><a href="/opinions">opinions</a></td>
-							<td><a href="/portfolio.html">portfolio</a></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			{INFO}
+	<div class="middle">
+		<!--<script>
+			document.write("<div class='js-message'>This site works best with JavaScript disabled, please disable it.</div>");
+			document.write("<div class='walker-left'></div>");
+			document.write("<div class='walker-right'></div>");
+		</script>-->
+		<h1 class="title-container">
+			<div class="title-gif"></div>
+			<font color="green"><b>></b></font><a href="/">Daniel's Homepage</a>
+			<div class="title-gif right"></div>
+		</h1>
+		<div id="links">
+			<div class="running-sprite"></div>
+			
+			<table border="1" width="100%" align="center">
+				<tbody>
+					<tr>
+						<td><a href="/">index</a></td>
+						<td><a href="/posts">posts</a></td>
+						<td><a href="/opinions">opinions</a></td>
+						<td><a href="/portfolio.html">portfolio</a></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
-		<div class="content">
-			{CONTENT}
-		</div>
-		<!-- <br><br> <div class="middle"> <img src="https://danieljon.es/linuxfreak.png"> <br> <a id="gentag" href="https://gitlab.com/ubunchu-translators/ubunchu">source</a> </div> -->
-		<br><br><div class="middle"> <a href="https://danieljon.es/posts/posts.rss"><img src="https://danieljon.es/media/rss.gif" alt="RSS feed"></a></div>
-		<div class="middle"> <a href="https://www.fsf.org/"><img src="https://danieljon.es/media/fsf_member.png" alt="FSF member"></a></div>
-		<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/websitegenerator/">websitegenerator in C</a></div>
-		<a href="https://gnupluslinux.com/anime/escalator.webm"><img src="https://danieljones.au/media/tux_rotate.gif" style="z-index: -1; position: fixed; right: 0%; bottom: -0px; width: 15%; height: auto;"></a>
-		<div style="z-index: -1; position: fixed; left: 0%; bottom: -0px; width: 100px; height: auto;">
-			<center>
-				<img src="https://danieljones.au/media/tux_jump2.gif">
-				<img src="https://danieljones.au/media/tux_dance2.gif">
-				<img src="https://danieljones.au/media/girl_dance.gif">
-				<img src="https://danieljones.au/media/miku_bop.gif">
-				<img src="https://danieljones.au/media/music.gif"><br>
-				<img src="https://danieljones.au/media/blush.gif">
-				<img src="https://danieljones.au/media/cat_heart.gif">
-				<img src="https://danieljones.au/media/cat_happy.gif">
-				<img src="https://danieljones.au/media/cat_tail.gif">
-				<img src="https://danieljones.au/media/miku.gif">
-				<img src="https://danieljones.au/media/i_love_you.gif">
-		</center>
-		</div>
-		<div class="walker-left"></div>
-		<div class="walker-right"></div>
-		<div class="walker"></div>
-		<div class="running-sprite2"></div>
-	</body>
+		{INFO}
+	</div>
+	<div class="content">
+		{CONTENT}
+	</div>
+	<!-- <br><br> <div class="middle"> <img src="https://danieljon.es/linuxfreak.png"> <br> <a id="gentag" href="https://gitlab.com/ubunchu-translators/ubunchu">source</a> </div> -->
+	<br><br><div class="middle"> <a href="https://danieljon.es/posts/posts.rss"><img src="https://danieljon.es/media/rss.gif" alt="RSS feed"></a></div>
+	<div class="middle"> <a href="https://www.fsf.org/"><img src="https://danieljon.es/media/fsf_member.png" alt="FSF member"></a>
+		<br><img src="https://danieljones.au/media/miku_fan.gif">
+	</div>
+	<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/websitegenerator/">websitegenerator in C</a></div>
+	<div style="position: fixed; right: 0; bottom: 0; width: 15vw; overflow: hidden;">
+		<img src="https://danieljones.au/media/tux_rotate.gif" style="width: 100%;">
+		<img src="https://danieljones.au/media/autism.gif" style="width: 100%;">
+	</div>
+	<div style="z-index: -1; position: fixed; left: 0%; bottom: -0px; width: 100px; height: auto;">
+		<center>
+			<img src="https://danieljones.au/media/tux_jump2.gif">
+			<img src="https://danieljones.au/media/tux_dance2.gif">
+			<img src="https://danieljones.au/media/girl_dance.gif">
+			<img src="https://danieljones.au/media/miku_bop.gif">
+			<img src="https://danieljones.au/media/music.gif"><br>
+			<img src="https://danieljones.au/media/blush.gif">
+			<img src="https://danieljones.au/media/cat_heart.gif">
+			<img src="https://danieljones.au/media/cat_happy.gif">
+			<img src="https://danieljones.au/media/cat_tail.gif">
+			<img src="https://danieljones.au/media/miku.gif">
+			<img src="https://danieljones.au/media/i_love_you.gif">
+	</center>
+	</div>
+	<div class="walker-left"></div>
+	<div class="walker-right"></div>
+	<div class="walker"></div>
+	<div class="running-sprite2"></div>
+</body>
 </html>

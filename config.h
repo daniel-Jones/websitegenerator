@@ -44,8 +44,8 @@ static const char 	*rss_string = "{ITEMS}";
 static const char 	*template_file = "template.txt";
 
 /* frontpage */
-static const char 	*frontpage_title = "Index";
-static const char 	*frontpage_info = "<h1>Index</h1>";
+static const char 	*frontpage_title = "Daniel's Homepage";
+static const char 	*frontpage_info = "<h1><marquee><img src=\"https://danieljones.au/media/blush.gif\">&nbsp;Welcome to my Homepage!!&nbsp;<img src=\"https://danieljones.au/media/blush.gif\"></marquee></h1>";
 static const char 	*frontpage_index = "content/index.txt";
 static const char 	*frontpage_index_output = "index.html";
 
