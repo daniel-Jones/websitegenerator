@@ -115,6 +115,18 @@ td {text-align: center;}
     transform: scaleX(1);
     z-index: 1;
 }
+.running-sprite2 {
+    position: fixed;
+    bottom: 5px;
+    left: 0;
+    width: 60px;        /* Adjust based on your sprite's actual size */
+    height: 60px;       /* Adjust based on your sprite's actual size */
+    background-image: url('https://danieljones.au/media/rem_run.gif');
+	background-size: cover;
+    animation: run-sprite 15s linear infinite;
+    transform: scaleX(1);
+    z-index: 1;
+}
 
 @keyframes run-sprite {
     0% {
@@ -258,11 +270,12 @@ table {
 			</script>-->
 			<h1 class="title-container">
 				<div class="title-gif"></div>
-				<a href="/">daniels homepage</a>
+				<font color="green"><b>></b></font><a href="/">Daniel's Homepage</a>
 				<div class="title-gif right"></div>
 			</h1>
 			<div id="links">
 				<div class="running-sprite"></div>
+				
 				<table border="1" width="100%" align="center">
 					<tbody>
 						<tr>
@@ -284,9 +297,24 @@ table {
 		<div class="middle"> <a href="https://www.fsf.org/"><img src="https://danieljon.es/media/fsf_member.png" alt="FSF member"></a></div>
 		<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/websitegenerator/">websitegenerator in C</a></div>
 		<a href="https://gnupluslinux.com/anime/escalator.webm"><img src="https://danieljones.au/media/tux_rotate.gif" style="z-index: -1; position: fixed; right: 0%; bottom: -0px; width: 15%; height: auto;"></a>
-		<a href="https://gnupluslinux.com/anime/escalator.webm"><img src="https://danieljones.au/media/i_love_you.gif" style="z-index: -1; position: fixed; left: 0%; bottom: -0px; width: 100px; height: auto;"></a>
+		<div style="z-index: -1; position: fixed; left: 0%; bottom: -0px; width: 100px; height: auto;">
+			<center>
+				<img src="https://danieljones.au/media/tux_jump2.gif">
+				<img src="https://danieljones.au/media/tux_dance2.gif">
+				<img src="https://danieljones.au/media/girl_dance.gif">
+				<img src="https://danieljones.au/media/miku_bop.gif">
+				<img src="https://danieljones.au/media/music.gif"><br>
+				<img src="https://danieljones.au/media/blush.gif">
+				<img src="https://danieljones.au/media/cat_heart.gif">
+				<img src="https://danieljones.au/media/cat_happy.gif">
+				<img src="https://danieljones.au/media/cat_tail.gif">
+				<img src="https://danieljones.au/media/miku.gif">
+				<img src="https://danieljones.au/media/i_love_you.gif">
+		</center>
+		</div>
 		<div class="walker-left"></div>
 		<div class="walker-right"></div>
 		<div class="walker"></div>
+		<div class="running-sprite2"></div>
 	</body>
 </html>
