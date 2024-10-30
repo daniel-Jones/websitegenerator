@@ -9,7 +9,7 @@
 	<!--<link rel="icon" type="image/png" href="https://danieljon.es/favicon.png">-->
 	<title>{TITLE}</title>
 	<style>
-@font-face
+/*@font-face
 {
 font-family: 'Agave-Regular';
 src: url(/media/fonts/Agave-Regular.eot);
@@ -23,8 +23,17 @@ url(/media/fontsassets/Agave-Regular.svg#Agave-Regular) format('svg');
   font-family: "Px437_Verite_8x8-2y";
 	src: url('Px437_Verite_8x8-2y.woff2');
 }
+	*/
+	@font-face {
+    font-family: 'allys_sad_handwritingregular';
+    src: url('https://danieljones.au/media/allys_sad_handwriting-webfont.woff2') format('woff2'),
+         url('https://danieljones.au/media/allys_sad_handwriting-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 
-body{font-family: 'Px437_Verite_8x8-2y', monospace !important; background: #F7F0FF; /*color: #999;*/}
+}
+
+body{font-family: 'allys_sad_handwritingregular', Arial; font-size: large; font-weight: bolder; background: #F7F0FF; /*color: #999;*/}
 body
 {
 color: white;
@@ -37,7 +46,7 @@ pre{overflow: auto; border-width: 1px; border-style: solid; border-color: white;
 .middle{text-align: center;}
 .middiv{margin: auto; width: 80%;}
 #gentag{text-align: center; font-size: 75%;}
-h1,h2,h3,h4{font-family: "Agave-Regular"; padding-left: 5px; /*color: #eee;*/}
+h1,h2,h3,h4{padding-left: 5px; /*color: #eee;*/}
 hr{border-color: white;}
 div.viewing{max-width: 70%; width: 100%; display: inline-block; margin: 10px;}
 div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-left: 15px; padding-bottom: 20px;}
@@ -90,6 +99,7 @@ max-width: 100%;
 a {
   color: #c625ef;
 	text-decoration: none;
+	font-family: 'allys_sad_handwritingregular', Arial;
 }
 .js-message
 {
@@ -100,6 +110,7 @@ td {text-align: center;}
 /*a{color: #eee;}*/
 
 #links a {
+	font-family: 'allys_sad_handwritingregular', Arial;
 padding: 2px 8px;
 color: #281b38;
 text-shadow: 
