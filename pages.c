@@ -657,9 +657,37 @@ writeposts(const int *posts, size_t totalposts, const char *outfile, int current
 			return 0;
 		}
 		char c;
+		int in_title = 1;
 		while ((c = fgetc(postfile)) != EOF)
 		{
-			fputc(c, tmp);
+			// first line has to be the title
+			// 1 = start
+			// 2 = writing
+			// 3 = end
+			// -1 = not in title
+			if (in_title == 1)
+			{
+				fprintf(tmp, "<a href='direct/%d.html'>", post);
+				fputc(c, tmp);
+				in_title = 2;
+			}
+			else if (in_title == 3)
+			{
+
+				fprintf(tmp, "</a>");
+				fputc(c, tmp);
+				in_title = -1;
+			}
+			else if (in_title == 2 && c == '\n')
+			{
+				// check if we are finished title (new line)
+				in_title = 3;
+				fputc(c, tmp);
+			}
+			else
+			{
+				fputc(c, tmp);
+			}
 		}
 		fprintf(tmp, "<hr>\n");
 		fclose(postfile);
