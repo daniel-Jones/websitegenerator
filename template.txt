@@ -352,6 +352,7 @@ to {
 	</div>
 	<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/websitegenerator/">websitegenerator in C</a></div>
 	<div style="position: fixed; right: 0; bottom: 0; width: 15vw; overflow: hidden;">
+		<img src="https://danieljones.au/media/autism_awareness.gif" style="width: 100%;">
 		<img src="https://danieljones.au/media/tux_rotate.gif" style="width: 100%;">
 		<img src="https://danieljones.au/media/autism.gif" style="width: 100%;">
 	</div>
