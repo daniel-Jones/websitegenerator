@@ -30,8 +30,8 @@ url(Agave-Regular.woff2) format('woff2');
 
 @font-face {
 	font-family: 'allys_sad_handwritingregular';
-	src: url('https://danieljones.au/media/allys_sad_handwriting-webfont.woff2') format('woff2'),
-			url('https://danieljones.au/media/allys_sad_handwriting-webfont.woff') format('woff'),
+	src: url('/media/allys_sad_handwriting-webfont.woff2') format('woff2'),
+			url('/media/allys_sad_handwriting-webfont.woff') format('woff'),
 			url('allys_sad_handwriting-webfont.woff2') format('woff');
 	font-weight: normal;
 	font-style: normal;
