@@ -47,6 +47,13 @@ body
 }
 
 img{max-width: 100%; max-height: 100%; overflow: hidden;}
+.blogimg
+{
+	width: 100%;
+	max-width: 400px;    /* Limit the image size on large screens */
+	height: auto;        /* Keep the image's aspect ratio intact */
+	overflow: hidden;
+}
 pre{overflow: auto; border-width: 1px; border-style: solid; border-color: white; /*background-color: #333339; color: #fff;*/}
 .middle{text-align: center;}
 .middiv{margin: auto; width: 80%;}
@@ -64,16 +71,15 @@ div.cover{display:inline-block; vertical-align: top; padding-top: 28px; padding-
 .notes {
 margin-left: 10px;
 display: inline-block;
-width: auto;
-max-height: 300px;
-max-width: 500px;
+max-height: 600px;
+max-width: 600px;
+width: 100%;
 overflow-y: scroll !important;
 scrollbar-width: auto;
 border: 15px solid;
 border-image: url('https://danieljones.au/media/div_border.gif') 40 stretch;
 padding: 1px;
 box-sizing: border-box;
-height: auto;
 }
 
 
@@ -344,6 +350,7 @@ to {
 	</div>
 	<div class="content">
 		{CONTENT}
+		<br><br>
 	</div>
 	<!-- <br><br> <div class="middle"> <img src="https://danieljon.es/linuxfreak.png"> <br> <a id="gentag" href="https://gitlab.com/ubunchu-translators/ubunchu">source</a> </div> -->
 	<br><br><div class="middle"> <a href="https://danieljon.es/posts/posts.rss"><img src="https://danieljon.es/media/rss.gif" alt="RSS feed"></a></div>
@@ -351,7 +358,7 @@ to {
 		<br><img src="https://danieljones.au/media/miku_fan.gif">
 	</div>
 	<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/websitegenerator/">websitegenerator in C</a></div>
-	<div style="position: fixed; right: 0; bottom: 0; width: 15vw; overflow: hidden;">
+	<div style="position: fixed; right: 0; bottom: 0; width: 10vw; overflow: hidden;">
 		<img src="https://danieljones.au/media/autism_awareness.gif" style="width: 100%;">
 		<img src="https://danieljones.au/media/tux_rotate.gif" style="width: 100%;">
 		<img src="https://danieljones.au/media/autism.gif" style="width: 100%;">
