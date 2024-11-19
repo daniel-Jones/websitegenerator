@@ -319,6 +319,12 @@ to {
         display: none; /* Hide on small viewports */
     }
 }
+
+.headertext
+{
+	font-size: 20px;
+	font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -335,7 +341,7 @@ to {
 		</h1>
 		<div id="links">
 			<div class="running-sprite"></div>
-			<table border="1" width="100%" align="center">
+			<table class="headertext" border="1" width="100%" align="center">
 				<tbody>
 					<tr>
 						<td><a href="/">index</a></td>
