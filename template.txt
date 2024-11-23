@@ -54,7 +54,7 @@ img{max-width: 100%; max-height: 100%; overflow: hidden;}
 	height: auto;        /* Keep the image's aspect ratio intact */
 	overflow: hidden;
 }
-pre{overflow: auto; border-width: 1px; border-style: solid; border-color: white; /*background-color: #333339; color: #fff;*/}
+pre{overflow: auto; border-width: 1px; border-style: solid; border-color: white; background-color: #333339; color: #fff;}
 .middle{text-align: center;}
 .middiv{margin: auto; width: 80%;}
 #gentag{text-align: center; font-size: 75%;}
