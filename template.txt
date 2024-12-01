@@ -384,9 +384,6 @@ to {
 			<img src="https://danieljones.au/media/i_love_you.gif">
 	</center>
 	</div>
-	<div class="walker-left"></div>
-	<div class="walker-right"></div>
-	<div class="walker"></div>
 	<div class="running-sprite2"></div>
 </body>
 </html>
