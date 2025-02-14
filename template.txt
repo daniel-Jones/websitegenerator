@@ -155,19 +155,31 @@ animation: run-sprite 8s linear infinite;
 transform: scaleX(1);
 z-index: 1;
 }
+
+/* Option 1: Jump when clicked */
 .running-sprite2 {
-position: fixed;
-bottom: 5px;
-left: 0;
-width: 60px;        /* Adjust based on your sprite's actual size */
-height: 60px;       /* Adjust based on your sprite's actual size */
-background-image: url('https://danieljones.au/media/rem_run.gif');
-background-size: cover;
-animation: run-sprite 15s linear infinite;
-transform: scaleX(1);
-z-index: 1;
+    position: fixed;
+    bottom: 5px;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    background-image: url('https://danieljones.au/media/rem_run.gif');
+    background-size: cover;
+    animation: run-sprite 15s linear infinite;
+    transform: scaleX(1);
+    z-index: 1;
+    cursor: pointer;
+    transition: bottom 0.2s ease-out;
 }
 
+.running-sprite2:active {
+    bottom: 50px;
+}
+
+@keyframes jump {
+    0%, 100% { bottom: 5px; }
+    50% { bottom: 50px; }
+}
 @keyframes run-sprite {
 0% {
 	left: 0;
