@@ -156,7 +156,6 @@ transform: scaleX(1);
 z-index: 1;
 }
 
-/* Option 1: Jump when clicked */
 .running-sprite2 {
     position: fixed;
     bottom: 5px;
@@ -169,17 +168,18 @@ z-index: 1;
     transform: scaleX(1);
     z-index: 1;
     cursor: pointer;
-    transition: bottom 0.2s ease-out;
 }
 
-.running-sprite2:active {
-    bottom: 50px;
+.running-sprite2.jumping {
+    animation: run-sprite 15s linear infinite, jump 0.5s ease-out;
 }
 
 @keyframes jump {
-    0%, 100% { bottom: 5px; }
-    50% { bottom: 50px; }
+    0% { transform: translateY(0) scaleX(var(--sprite-direction, 1)); }
+    50% { transform: translateY(-60px) scaleX(var(--sprite-direction, 1)); }
+    100% { transform: translateY(0) scaleX(var(--sprite-direction, 1)); }
 }
+
 @keyframes run-sprite {
 0% {
 	left: 0;
@@ -340,6 +340,100 @@ to {
 </style>
 </head>
 <body>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // First create a style for the counter
+  const style = document.createElement('style');
+  style.textContent = `
+    .click-counter {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 120px;
+      font-weight: bold;
+      color: #FF00FF;
+      z-index: 9999;
+      pointer-events: none;
+      animation: bounceAndFade 1s forwards;
+    }
+
+    @keyframes bounceAndFade {
+      0% {
+        transform: translate(-50%, -50%) scale(0.3);
+        opacity: 0;
+      }
+      20% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+      }
+      40% {
+        transform: translate(-50%, -50%) scale(0.9);
+        opacity: 1;
+      }
+      60% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Initialize click counter
+  let clickCount = 0;
+
+  // Find the sprite element
+  const sprite = document.querySelector('.running-sprite2');
+  
+  if (sprite) {
+    // Add click handler
+    sprite.addEventListener('mousedown', () => {
+      clickCount++;
+      
+      // Create and display the counter element
+      const counter = document.createElement('div');
+      counter.className = 'click-counter';
+      counter.textContent = clickCount;
+      document.body.appendChild(counter);
+      
+      // Remove the counter element after animation
+      counter.addEventListener('animationend', () => {
+        counter.remove();
+      });
+    });
+  } else {
+    console.error('Could not find element with class running-sprite2');
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const sprite = document.querySelector('.running-sprite2');
+  
+  if (sprite) {
+    sprite.addEventListener('mousedown', () => {
+      // Get current scaleX value
+      const currentScale = getComputedStyle(sprite).transform;
+      const scaleX = currentScale.includes('matrix') ? 
+        parseFloat(currentScale.split(',')[0].slice(7)) : 1;
+      
+      // Set CSS variable for the direction
+      sprite.style.setProperty('--sprite-direction', scaleX);
+      
+      // Trigger jump
+      sprite.classList.remove('jumping');
+      void sprite.offsetWidth;
+      sprite.classList.add('jumping');
+    });
+  }
+});
+</script>
+
+
+
 	<div class="middle">
 		<!--<script>
 			document.write("<div class='js-message'>This site works best with JavaScript disabled, please disable it.</div>");
