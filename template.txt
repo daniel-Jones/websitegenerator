@@ -341,7 +341,34 @@ to {
 </head>
 <body>
 <script>
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  let expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 document.addEventListener('DOMContentLoaded', () => {
+  // cookie
+	let cookies = getCookie("cookies");
+	if (cookies == "")
+	{
+		cookies = 0;
+	}
   // First create a style for the counter
   const style = document.createElement('style');
   style.textContent = `
@@ -384,7 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.head.appendChild(style);
 
   // Initialize click counter
-  let clickCount = 0;
+  let clickCount = cookies;
 
   // Find the sprite element
   const sprite = document.querySelector('.running-sprite2');
@@ -393,6 +420,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add click handler
     sprite.addEventListener('mousedown', () => {
       clickCount++;
+	cookies = clickCount;
+	setCookie("cookies", cookies);
       
       // Create and display the counter element
       const counter = document.createElement('div');
