@@ -138,23 +138,23 @@ td {text-align: center;}
 
 #links a {
 	font-family: 'allys_sad_handwritingregular', Arial;
-padding: 2px 8px;
+padding: 0.15em 0.6em;
 color: #281b38;
 text-shadow: 
-	-1px -1px 0 white,
-	1px -1px 0 white,
-	-1px 1px 0 white,
-	1px 1px 0 white;
+	-0.08em -0.08em 0 white,
+	0.08em -0.08em 0 white,
+	-0.08em 0.08em 0 white,
+	0.08em 0.08em 0 white;
 transition: all 0.2s;
 }
 
 #links a:hover {
 color: white;
 text-shadow: 
-	-1px -1px 0 #281b38,
-	1px -1px 0 #281b38,
-	-1px 1px 0 #281b38,
-	1px 1px 0 #281b38;
+	-0.08em -0.08em 0 #281b38,
+	0.08em -0.08em 0 #281b38,
+	-0.08em 0.08em 0 #281b38,
+	0.08em 0.08em 0 #281b38;
 }
 
 .running-sprite {
@@ -181,6 +181,17 @@ z-index: 1;
     transform: scaleX(1);
     z-index: 1;
     cursor: pointer;
+    user-select: none;
+}
+
+.running-sprite2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -30px;
+    right: -30px;
+    height: 100%;
+    pointer-events: all;
 }
 
 .running-sprite2.jumping {
@@ -325,14 +336,26 @@ to {
 }
 }
 
-.leftimages
-{
+.leftimages {
 	z-index: -1;
 	position: fixed;
 	left: 0%;
-	bottom: -0px;
+	top: 0;
+	bottom: 0;
 	width: 100px;
-	height: auto;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.leftimages .gif-container {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding-left: 5px;
+}
+
+.leftimages img {
+	margin: 5px 0;
 }
 .hide-on-small
 {
@@ -518,20 +541,59 @@ document.addEventListener('DOMContentLoaded', () => {
 		<img src="https://danieljones.au/media/autism.gif" style="width: 100%;">
 	</div>
 	<div class="leftimages hide-on-small">
-		<center>
-			<img src="https://danieljones.au/media/tux_jump2.gif">
-			<img src="https://danieljones.au/media/tux_dance2.gif">
-			<img src="https://danieljones.au/media/girl_dance.gif">
-			<img src="https://danieljones.au/media/miku_bop.gif">
-			<img src="https://danieljones.au/media/music.gif"><br>
-			<img src="https://danieljones.au/media/blush.gif">
-			<img src="https://danieljones.au/media/cat_heart.gif">
-			<img src="https://danieljones.au/media/cat_happy.gif">
-			<img src="https://danieljones.au/media/cat_tail.gif">
-			<img src="https://danieljones.au/media/miku.gif">
-			<img src="https://danieljones.au/media/i_love_you.gif">
-	</center>
+		<div class="gif-container"></div>
 	</div>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const gifs = [
+				'https://danieljones.au/media/tux_jump2.gif',
+				'https://danieljones.au/media/tux_dance2.gif',
+				'https://danieljones.au/media/girl_dance.gif',
+				'https://danieljones.au/media/miku_bop.gif',
+				'https://danieljones.au/media/music.gif',
+				'https://danieljones.au/media/blush.gif',
+				'https://danieljones.au/media/cat_heart.gif',
+				'https://danieljones.au/media/cat_happy.gif',
+				'https://danieljones.au/media/cat_tail.gif',
+				'https://danieljones.au/media/miku.gif',
+				'https://danieljones.au/media/i_love_you.gif'
+			];
+
+			const container = document.querySelector('.gif-container');
+			
+			function shuffleArray(array) {
+				for (let i = array.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[array[i], array[j]] = [array[j], array[i]];
+				}
+				return array;
+			}
+
+			function fillContainer() {
+				const containerHeight = container.parentElement.offsetHeight;
+				let currentHeight = container.offsetHeight;
+				
+				while (currentHeight < containerHeight * 1.5) {
+					const shuffledGifs = shuffleArray([...gifs]);
+					shuffledGifs.forEach(gifUrl => {
+						const img = document.createElement('img');
+						img.src = gifUrl;
+						container.appendChild(img);
+						currentHeight = container.offsetHeight;
+					});
+				}
+			}
+
+			// Initial fill
+			fillContainer();
+
+			// Update on resize
+			window.addEventListener('resize', () => {
+				container.innerHTML = '';
+				fillContainer();
+			});
+		});
+	</script>
 	<div class="running-sprite2"></div>
 </body>
 </html>
