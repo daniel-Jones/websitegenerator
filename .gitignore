@@ -1,0 +1,36 @@
+# Object files
+*.o
+
+# Executables
+generate
+guestbook.cgi
+
+# IDE files
+.ycm_extra_conf.py
+websitegenerator.cflags
+websitegenerator.config
+websitegenerator.creator
+websitegenerator.creator.user
+websitegenerator.cxxflags
+websitegenerator.files
+websitegenerator.includes
+
+# Tags and scope files
+tags
+cscope.out
+
+# Backup files
+*.bup
+
+# Generated output
+output/
+
+# Shell scripts
+live.sh
+pushlive.sh
+Agave-Regular.woff2
+allys_sad_handwriting-webfont.woff
+allys_sad_handwriting-webfont.woff2
+content/
+guestbook.c.old
+music.html
