@@ -512,7 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		</h1>
 		<div id="links">
 			<div class="running-sprite"></div>
-			<table class="headertext" border="1" width="100%" align="center">
+			<table class="headertext" width="100%" align="center" style="border-collapse: collapse;">
 				<tbody>
 					<tr>
 						<td><a href="/">index</a></td>
