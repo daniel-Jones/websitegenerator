@@ -373,7 +373,101 @@ to {
 	font-size: 20px;
 	font-weight: bold;
 }
+
+.ufo {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    background-image: url('https://danieljones.au/media/ufo.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: -50;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform-origin: center;
+}
+
+@keyframes fly-across {
+    0% {
+        opacity: 0;
+        transform: translate(var(--start-x), var(--start-y)) rotate(var(--angle));
+    }
+    10% {
+        opacity: 0.5;
+    }
+    90% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--end-x), var(--end-y)) rotate(var(--angle));
+    }
+}
 </style>
+
+<script>
+class UFO {
+    constructor() {
+        this.element = document.createElement('div');
+        this.element.className = 'ufo';
+        document.body.appendChild(this.element);
+        this.animate();
+    }
+
+    getRandomPosition() {
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        const diagonal = Math.sqrt(screenWidth * screenWidth + screenHeight * screenHeight);
+        
+        // Random angle for direction of travel
+        const angle = Math.random() * 360;
+        const rad = angle * Math.PI / 180;
+        
+        // Distance from center to ensure off-screen start/end
+        const distance = diagonal;
+        
+        // Calculate start and end positions
+        const startX = Math.cos(rad) * distance;
+        const startY = Math.sin(rad) * distance;
+        const endX = Math.cos(rad + Math.PI) * distance;
+        const endY = Math.sin(rad + Math.PI) * distance;
+        
+        return {
+            startX,
+            startY,
+            endX,
+            endY,
+            angle: angle // UFO points in direction of travel
+        };
+    }
+
+    animate() {
+        const pos = this.getRandomPosition();
+        
+        this.element.style.setProperty('--start-x', `${pos.startX}px`);
+        this.element.style.setProperty('--start-y', `${pos.startY}px`);
+        this.element.style.setProperty('--end-x', `${pos.endX}px`);
+        this.element.style.setProperty('--end-y', `${pos.endY}px`);
+        this.element.style.setProperty('--angle', `${pos.angle}deg`);
+        
+        this.element.style.animation = 'none';
+        void this.element.offsetWidth; // Force reflow
+        this.element.style.animation = 'fly-across 6s linear';
+        
+        // Schedule next animation
+        this.element.addEventListener('animationend', () => {
+            setTimeout(() => this.animate(), Math.random() * 5000);
+        }, { once: true });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+   new UFO();
+});
+</script>
 </head>
 <body>
 <script>
@@ -595,5 +689,3 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	</script>
 	<div class="running-sprite2"></div>
-</body>
-</html>
