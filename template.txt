@@ -364,7 +364,7 @@ to {
 
 @media (max-width: 600px) { /* Adjust the max-width as needed */
     .hide-on-small {
-        display: none; /* Hide on small viewports */
+        display: none !important; /* Hide on small viewports */
     }
 }
 
@@ -624,17 +624,101 @@ document.addEventListener('DOMContentLoaded', () => {
 		<br><br>
 	</div>
 	<!-- <br><br> <div class="middle"> <img src="https://danieljon.es/linuxfreak.png"> <br> <a id="gentag" href="https://gitlab.com/ubunchu-translators/ubunchu">source</a> </div> -->
-	<div class="middle"> <a href="https://www.fsf.org/"><img src="https://danieljon.es/media/fsf_member.png" alt="FSF member"></a>
+	
+	<div class="middle">
+		<img src="https://danieljones.au/media/tuxlove.gif"><br>
+		<a href="https://www.fsf.org/"><img src="https://danieljon.es/media/fsf_member.png" alt="FSF member"></a>
 		<br><img src="https://danieljones.au/media/miku_fan.gif">
 		<br><img src="https://danieljones.au/media/hentai_free.png" style="max-width: 100px;">
 	<br><div class="middle"> <a href="https://danieljon.es/posts/posts.rss"><img src="https://danieljon.es/media/rss.gif" alt="RSS feed"></a></div>
 	</div>
 	<br> <div id="gentag">page generated {TIME} using <a href="https://git.danieljon.es/websitegenerator/">websitegenerator in C</a></div>
 	<div style="position: fixed; right: 0; bottom: 0; width: 10vw; overflow: hidden;">
-		<img src="https://danieljones.au/media/dance_miku.gif" style="width: 100%;">
-		<img src="https://danieljones.au/media/autism_awareness.gif" style="width: 100%;">
+
+<div class="hide-on-small" style="display: flex; gap: 32px;">
+
+  <!-- Group 1: vertical column -->
+  <div style="display: flex; flex-direction: column; gap: 8px; max-width: 100px;">
+    <img src="https://danieljones.au/media/buttons/firefox.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/aniquake.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/knbutton.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/signtheguestbook.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/trustme.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/twopaws.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/vlc.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/WEBP.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/2funny2load.jpg" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/antiinternet.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/catscape.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/emulate.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/linuxluv.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/goingonlinetoactsilly.jpg" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/graphicdesign.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/ilovetodostuffonthecomputer.jpg" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/hatemac.jpg" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/IMG_0255.GIF" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/imwaycooleronline.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/internetprivacynow.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/isupportgrass.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/keyboard.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/lainstamp.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/linuxnow.jpg" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/sharingcaring.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/web3.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/webddesignpassion.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/wiggly.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/Zblockadblockspyware.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/trustme.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/firefox.gif" style="max-height: 56px;">
+  </div>
+
+  <!-- Group 2: vertical column -->
+  <div style="display: flex; flex-direction: column; gap: 8px; max-width: 100px;">
+    <img src="https://danieljones.au/media/buttons/bestviewed.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/cssdifficult.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/miku2.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/nftbutton.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/NoDiscord.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/poweredbylinux.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/socks.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/steam.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/voltbun1.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/y2k2.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/anythingbutchrome.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/bestwithcat.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/centerstamps.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/dontfeedai.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/dvd.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/imonlycoolontheinterwebds.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/madewithcss.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/netscape.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/neverlisten.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/openeyes.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/piracy.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/propaganda.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/rember.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/stampsucks.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/timewastestamp.png" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/toebeansNOW.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/toomanystamps.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/www.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/Zditchsocialmedianow.gif" style="max-height: 56px;">
+    <img src="https://danieljones.au/media/buttons/Zkde.jpg" style="max-height: 56px;">
+  </div>
+
+</div>
+
+
+</div>
+
+<br>
+
+<!--
+		<img src="https://danieljones.au/media/dance_miku.gif" style="max-width: 100px;">
+		<img src="https://danieljones.au/media/autism_awareness.gif" style="max-height: 100px;">
 		<img src="https://danieljones.au/media/tux_rotate.gif" style="width: 100%;">
 		<img src="https://danieljones.au/media/autism.gif" style="width: 100%;">
+-->
 	</div>
 	<div class="leftimages hide-on-small">
 		<div class="gif-container"></div>
@@ -652,7 +736,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				'https://danieljones.au/media/cat_happy.gif',
 				'https://danieljones.au/media/cat_tail.gif',
 				'https://danieljones.au/media/miku.gif',
-				'https://danieljones.au/media/i_love_you.gif'
+				'https://danieljones.au/media/i_love_you.gif',
+				'https://danieljones.au/media/buttons/computer-01.gif'
 			];
 
 			const container = document.querySelector('.gif-container');
